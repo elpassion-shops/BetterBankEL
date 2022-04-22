@@ -16,12 +16,20 @@ class MockDataBase {
     const transferId = Math.random().toString();
     this.transfers = [...this.transfers, { id: transferId, ...mockTransfer }];
     const accountBalance =
-      this.accountDetails.accountBalance + mockTransfer.amount;
+      mockTransfer.type === 'incoming'
+        ? this.accountDetails.accountBalance + mockTransfer.amount
+        : this.accountDetails.accountBalance - mockTransfer.amount;
     return {
       isCorrect: accountBalance >= 0 ? true : false,
-      accountBalance: accountBalance,
+      accountBalance:
+        accountBalance >= 0
+          ? accountBalance
+          : this.accountDetails.accountBalance,
       transferID: transferId,
-      message: accountBalance >= 0 ? 'Ok' : 'Something went wrong',
+      message:
+        accountBalance >= 0
+          ? 'Ok'
+          : "Something went wrong we didn't charge any money",
     };
   }
 
@@ -45,6 +53,13 @@ describe('MockDataBase', () => {
     fromOrToName: 'Bartłomiej Wiercibrzuch',
   };
 
+  let mockTransferMinus: ITransfer = {
+    type: 'outgoing',
+    date: new Date().toString(),
+    amount: 1000,
+    fromOrToName: 'Bartłomiej Wiercibrzuch',
+  };
+
   beforeEach(() => {
     mockDb = new MockDataBase(mockAccountDetails);
   });
@@ -56,10 +71,19 @@ describe('MockDataBase', () => {
     expect(mockDb.getAccountDetails()).toEqual(mockAccountDetails);
   });
 
-  it('should add return sendTransferResponse', () => {
+  it('should add transfer amount to accountBalance when "incoming" type passed', () => {
     expect(mockDb.sendTransfer(mockTransfer)).toEqual({
       isCorrect: true,
       accountBalance: 2000,
+      transferID: expect.any(String),
+      message: 'Ok',
+    });
+  });
+
+  it('should subtract transfer amount from accountBalance when "outgoing" type passed', () => {
+    expect(mockDb.sendTransfer(mockTransferMinus)).toEqual({
+      isCorrect: true,
+      accountBalance: 0,
       transferID: expect.any(String),
       message: 'Ok',
     });
