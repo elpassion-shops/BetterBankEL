@@ -30,4 +30,15 @@ describe(Account.name, () => {
     const linkElement = await findByText('Account balance: 0');
     expect(linkElement).not.toBeNull();
   });
+
+  it('should have Account number', async () => {
+    // given
+    const { findByText } = render(<Account />);
+
+    // when
+
+    // then
+    const element = await findByText('Account number: 123123123123');
+    expect(element).not.toBeNull();
+  });
 });
