@@ -1,18 +1,18 @@
-import { IAccountDetails, ITransfer } from '../../../../interfaces/src/index';
+import { IAccountDetails, ITransfer } from '@bank-el/interfaces';
 import { MockDataBase } from './MockDataBase';
 
 describe('MockDataBase', () => {
   let mockDb: MockDataBase;
   let mockAccountDetails: IAccountDetails;
 
-  let mockTransfer: ITransfer = {
+  const mockTransfer: ITransfer = {
     type: 'incoming',
     date: new Date().toString(),
     amount: 1000,
     fromOrToName: 'Bartłomiej Wiercibrzuch',
   };
 
-  let mockTransferMinus: ITransfer = {
+  const mockTransferMinus: ITransfer = {
     type: 'outgoing',
     date: new Date().toString(),
     amount: 1000,

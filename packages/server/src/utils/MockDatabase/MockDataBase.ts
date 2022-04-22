@@ -2,7 +2,7 @@ import {
   IAccountDetails,
   ITransfer,
   ISendTransferResponse,
-} from '../../../../interfaces/src/index';
+} from '@bank-el/interfaces';
 import { MockDatabaseHelper } from './mockDatabase-helper';
 
 export class MockDataBase {
