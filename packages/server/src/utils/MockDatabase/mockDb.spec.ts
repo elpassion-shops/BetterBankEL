@@ -24,6 +24,10 @@ class MockDataBase {
       message: accountBalance >= 0 ? 'Ok' : 'Something went wrong',
     };
   }
+
+  getTransfersHistory(): any {
+    return this.transfers;
+  }
 }
 
 describe('MockDataBase', () => {
@@ -68,5 +72,9 @@ describe('MockDataBase', () => {
       id: expect.any(String),
       ...transfer,
     });
+  });
+
+  it('should display empty transfers history when no transfers added', () => {
+    expect(mockDb.getTransfersHistory()).toEqual([]);
   });
 });
