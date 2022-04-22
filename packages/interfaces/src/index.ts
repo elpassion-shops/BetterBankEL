@@ -8,7 +8,7 @@ export interface ITransfer {
 
 export interface IAccountDetails {
   accountBalance: number;
-  accountNumber: number;
+  accountNumber: string;
 }
 
 export interface ITransferHistory {
@@ -22,7 +22,7 @@ export interface IGetTransfersByDateRangeData {
 
 export interface ISendTransferResponse {
   isCorrect: boolean;
-  transferID: number;
+  transferID: string;
   accountBalance: number;
   message: string;
 }

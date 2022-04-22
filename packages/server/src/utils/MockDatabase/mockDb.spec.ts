@@ -1,10 +1,28 @@
-import { IAccountDetails } from '../../../../interfaces/src/index';
+import {
+  IAccountDetails,
+  ITransfer,
+  ISendTransferResponse,
+} from '../../../../interfaces/src/index';
 
 class MockDataBase {
+  transfers: ITransfer[] = [];
   constructor(private readonly accountDetails: IAccountDetails) {}
 
-  getAccountDetails(): any {
+  getAccountDetails(): IAccountDetails {
     return this.accountDetails;
+  }
+
+  sendTransfer(mockTransfer: ITransfer): ISendTransferResponse {
+    const transferId = Math.random().toString();
+    this.transfers = [...this.transfers, { id: transferId, ...mockTransfer }];
+    const accountBalance =
+      this.accountDetails.accountBalance + mockTransfer.amount;
+    return {
+      isCorrect: accountBalance >= 0 ? true : false,
+      accountBalance: accountBalance,
+      transferID: transferId,
+      message: accountBalance >= 0 ? 'Ok' : 'Something went wrong',
+    };
   }
 }
 
@@ -13,7 +31,14 @@ describe('MockDataBase', () => {
 
   let mockAccountDetails: IAccountDetails = {
     accountBalance: 1000,
-    accountNumber: 1234567890,
+    accountNumber: '1234567890',
+  };
+
+  let mockTransfer: ITransfer = {
+    type: 'incoming',
+    date: new Date().toString(),
+    amount: 1000,
+    fromOrToName: 'Bartłomiej Wiercibrzuch',
   };
 
   beforeEach(() => {
@@ -25,5 +50,23 @@ describe('MockDataBase', () => {
 
   it('should return Account Details', () => {
     expect(mockDb.getAccountDetails()).toEqual(mockAccountDetails);
+  });
+
+  it('should add return sendTransferResponse', () => {
+    expect(mockDb.sendTransfer(mockTransfer)).toEqual({
+      isCorrect: true,
+      accountBalance: 2000,
+      transferID: expect.any(String),
+      message: 'Ok',
+    });
+  });
+
+  it('should add transfer to transfers array', () => {
+    const transfer = mockTransfer;
+    mockDb.sendTransfer(transfer);
+    expect(mockDb.transfers[0]).toEqual({
+      id: expect.any(String),
+      ...transfer,
+    });
   });
 });
