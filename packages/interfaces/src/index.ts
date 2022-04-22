@@ -8,7 +8,7 @@ export interface ITransfer {
 
 export interface IAccountDetails {
   accountBalance: number;
-  accountNumber: number;
+  accountNumber: string;
 }
 
 export interface ITransferHistory {
@@ -26,12 +26,15 @@ export interface ISendTransferResponse {
   accountBalance: number;
   message: string;
 }
+export type IJSONData = IGetTransfersByDateRangeData | ITransfer;
 
 export interface IBankAppAPI {
-  getAccountDetails(): () => Promise<IAccountDetails>;
-  getTransfersHistory(): () => Promise<ITransferHistory>;
-  getTransfersByDateRange(): (
+  serverUrl: string;
+  postJson: (url: string, method: string, data: IJSONData) => Promise<Response>;
+  getAccountDetails: () => Promise<IAccountDetails>;
+  getTransfersHistory: () => Promise<ITransferHistory>;
+  getTransfersByDateRange: (
     data: IGetTransfersByDateRangeData
   ) => Promise<ITransferHistory>;
-  sendTransfer(): (data: ITransfer) => Promise<ISendTransferResponse>;
+  sendTransfer: (data: ITransfer) => Promise<ISendTransferResponse>;
 }
