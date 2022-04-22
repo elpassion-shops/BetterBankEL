@@ -11,7 +11,9 @@ function CustomApp({ Component, pageProps }: AppProps) {
         <link rel="icon" type="image/svg+xml" href="data:image/x-icon;" />
       </Head>
 
-      <Component {...pageProps} />
+      <div className="dark:text-white">
+        <Component {...pageProps} />
+      </div>
     </>
   );
 }
