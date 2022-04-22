@@ -19,4 +19,15 @@ describe('Index', () => {
     const element = await context.findByText('BetterBankEL');
     expect(element).not.toBeNull();
   });
+
+  it('should have link named Account Details', async () => {
+    // given
+    const { findByText } = render(<Index />);
+
+    // when
+
+    // then
+    const linkElement = await findByText('Account Details');
+    expect(linkElement).not.toBeNull();
+  });
 });
