@@ -8,7 +8,7 @@ export interface ITransfer {
 
 export interface IAccountDetails {
   accountBalance: number;
-  accountNumber: number;
+  accountNumber: string;
 }
 
 export interface ITransferHistory {
