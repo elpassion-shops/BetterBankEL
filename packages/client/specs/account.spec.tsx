@@ -38,7 +38,7 @@ describe(Account.name, () => {
     // when
 
     // then
-    const linkElement = await findByText('Account number: 123123123123');
-    expect(linkElement).not.toBeNull();
+    const element = await findByText('Account number: 123123123123');
+    expect(element).not.toBeNull();
   });
 });
