@@ -17,9 +17,10 @@ describe('AccountController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
-  it('should send balance to a client', function () {
+  it('should send account balance and account number to a client', function () {
     expect(controller.sendAccountDetails()).toEqual({
       accountBalance: expect.any(Number),
+      accountNumber: expect.any(String),
     });
   });
 });
