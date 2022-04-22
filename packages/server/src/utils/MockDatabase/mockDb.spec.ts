@@ -77,4 +77,12 @@ describe('MockDataBase', () => {
   it('should display empty transfers history when no transfers added', () => {
     expect(mockDb.getTransfersHistory()).toEqual([]);
   });
+
+  it('should display all transfers history', () => {
+    const transfer1 = mockTransfer;
+    const transfer2 = mockTransfer;
+    mockDb.sendTransfer(transfer1);
+    mockDb.sendTransfer(transfer2);
+    expect(mockDb.getTransfersHistory()).toHaveLength(2);
+  });
 });
