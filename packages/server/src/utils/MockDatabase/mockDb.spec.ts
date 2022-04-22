@@ -1,46 +1,5 @@
-import {
-  IAccountDetails,
-  ITransfer,
-  ISendTransferResponse,
-} from '../../../../interfaces/src/index';
-
-class MockDataBase {
-  transfers: ITransfer[] = [];
-  constructor(public accountDetails: IAccountDetails) {}
-
-  getAccountDetails(): IAccountDetails {
-    return this.accountDetails;
-  }
-
-  sendTransfer(mockTransfer: ITransfer): ISendTransferResponse {
-    const transferId = Math.random().toString();
-    this.transfers = [...this.transfers, { id: transferId, ...mockTransfer }];
-
-    const accountBalance =
-      mockTransfer.type === 'incoming'
-        ? this.accountDetails.accountBalance + mockTransfer.amount
-        : this.accountDetails.accountBalance - mockTransfer.amount;
-
-    const isCorrect = accountBalance >= 0 ? true : false;
-    const message =
-      accountBalance >= 0
-        ? 'ok'
-        : "Something went wrong we didn't charge any money";
-
-    this.accountDetails.accountBalance =
-      accountBalance >= 0 ? accountBalance : this.accountDetails.accountBalance;
-    return {
-      isCorrect,
-      accountBalance: this.accountDetails.accountBalance,
-      transferID: transferId,
-      message,
-    };
-  }
-
-  getTransfersHistory(): any {
-    return this.transfers;
-  }
-}
+import { IAccountDetails, ITransfer } from '../../../../interfaces/src/index';
+import { MockDataBase } from './MockDataBase';
 
 describe('MockDataBase', () => {
   let mockDb: MockDataBase;
@@ -100,7 +59,7 @@ describe('MockDataBase', () => {
       isCorrect: false,
       accountBalance: 0,
       transferID: expect.any(String),
-      message: "Something went wrong we didn't charge any money",
+      message: 'Something went wrong',
     });
   });
 
