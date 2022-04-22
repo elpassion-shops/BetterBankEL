@@ -27,7 +27,7 @@ export interface ISendTransferResponse {
   message: string;
 }
 
-export interface IBankAppInterface {
+export interface IBankAppAPI {
   getAccountDetails(): () => Promise<IAccountDetails>;
   getTransfersHistory(): () => Promise<ITransferHistory>;
   getTransfersByDateRange(): (
