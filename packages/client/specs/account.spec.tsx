@@ -1,33 +1,33 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import Index from '../pages/index';
+import Account from '../pages/account';
 
-describe(Index.name, () => {
+describe(Account.name, () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Index />);
+    const { baseElement } = render(<Account />);
     expect(baseElement).toBeTruthy();
   });
 
   it('should contain proper title', async () => {
     // given
-    const context = render(<Index />);
+    const context = render(<Account />);
 
     // when
 
     // then
-    const element = await context.findByText('BetterBankEL');
+    const element = await context.findByText('Account');
     expect(element).not.toBeNull();
   });
 
-  it('should have link named Account Details', async () => {
+  it('should have Account balance', async () => {
     // given
-    const { findByText } = render(<Index />);
+    const { findByText } = render(<Account />);
 
     // when
 
     // then
-    const linkElement = await findByText('Account Details');
+    const linkElement = await findByText('Account balance: 0');
     expect(linkElement).not.toBeNull();
   });
 });
