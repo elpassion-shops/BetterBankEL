@@ -15,4 +15,9 @@ describe('AccountService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+  it('should send account balance to a client', function () {
+    expect(service.sendAccountDetails()).toEqual({
+      accountBalance: expect.any(Number),
+    });
+  });
 });
