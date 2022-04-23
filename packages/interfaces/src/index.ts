@@ -27,11 +27,15 @@ export interface ISendTransferResponse {
   message: string;
 }
 
+export type IJSONData = IGetTransfersByDateRangeData | ITransfer;
+
 export interface IBankAppAPI {
-  getAccountDetails(): () => Promise<IAccountDetails>;
-  getTransfersHistory(): () => Promise<ITransferHistory>;
-  getTransfersByDateRange(): (
+  serverUrl: string;
+  postJson: (url: string, method: string, data: IJSONData) => Promise<Response>;
+  getAccountDetails: () => Promise<IAccountDetails>;
+  getTransfersHistory: () => Promise<ITransferHistory>;
+  getTransfersByDateRange: (
     data: IGetTransfersByDateRangeData
   ) => Promise<ITransferHistory>;
-  sendTransfer(): (data: ITransfer) => Promise<ISendTransferResponse>;
+  sendTransfer: (data: ITransfer) => Promise<ISendTransferResponse>;
 }
