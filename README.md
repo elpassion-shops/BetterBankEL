@@ -29,6 +29,16 @@ Below are our core plugins:
 
 There are also many [community plugins](https://nx.dev/community) you could add.
 
+## For install after clone use only npm
+
+npm install
+
+## Install service worker
+
+npx msw init packages/client/public
+
+> This will copy the mockServiceWorker.js inside the client project
+
 ## Generate an application
 
 Run `nx g @nrwl/react:app my-app` to generate an application.
