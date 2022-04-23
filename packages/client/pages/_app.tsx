@@ -2,6 +2,10 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import './styles.css';
 
+if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+  import('../mocks').then(({ setupMocks }) => setupMocks());
+}
+
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
