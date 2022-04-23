@@ -22,7 +22,7 @@ export interface IGetTransfersByDateRangeData {
 
 export interface ISendTransferResponse {
   isCorrect: boolean;
-  transferID: number;
+  transferID: string;
   accountBalance: number;
   message: string;
 }
