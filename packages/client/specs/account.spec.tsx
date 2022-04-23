@@ -1,7 +1,12 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-
+import 'whatwg-fetch';
 import Account from '../pages/account';
+import { mswServer } from '../mocks/mswServer';
+
+beforeAll(() => mswServer.listen());
+afterEach(() => mswServer.resetHandlers());
+afterAll(() => mswServer.close());
 
 describe(Account.name, () => {
   it('should render successfully', () => {
@@ -23,22 +28,23 @@ describe(Account.name, () => {
   it('should have Account balance', async () => {
     // given
     const { findByText } = render(<Account />);
+    const accountBalance = '42';
 
     // when
 
     // then
-    const linkElement = await findByText('Account balance: 0');
+    const linkElement = await findByText(`Account balance: ${accountBalance}`);
     expect(linkElement).not.toBeNull();
   });
 
   it('should have Account number', async () => {
     // given
     const { findByText } = render(<Account />);
-
+    const accountNumber = '61109010140000071219812874';
     // when
 
     // then
-    const element = await findByText('Account number: 123123123123');
+    const element = await findByText(`Account number: ${accountNumber}`);
     expect(element).not.toBeNull();
   });
 });
