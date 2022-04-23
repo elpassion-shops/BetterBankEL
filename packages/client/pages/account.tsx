@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import SendTransferForm from '../components/SendTransferForm';
 import { BankAppAPI } from '../helpers/BankAPI';
 
 export function Account() {
@@ -28,6 +29,8 @@ export function Account() {
           </ul>
         )}
       </div>
+
+      <SendTransferForm />
     </>
   );
 }

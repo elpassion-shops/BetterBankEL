@@ -12,20 +12,24 @@ afterAll(() => mswServer.close());
 
 describe('LoginForm', () => {
   it('should render successfully', () => {
+    // given
     const { baseElement } = render(<LoginForm />);
+
+    // then
     expect(baseElement).toBeTruthy();
   });
 
   it('should allow a user to log in', async () => {
+    // given
     const accountBalance = '42';
     const accountNumber = '61109010140000071219812874';
-
     render(<LoginForm />);
 
+    // when
     await userEvent.type(screen.getByLabelText(/username/i), 'johnUser');
-
     await userEvent.click(screen.getByRole('button', { name: /submit/i }));
 
+    // then
     expect(
       await screen.findByText('f79e82e8-c34a-4dc7-a49e-9fadc0979fda')
     ).toBeInTheDocument();
