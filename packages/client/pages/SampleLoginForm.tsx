@@ -1,7 +1,6 @@
 import { ITransfer } from '@bank-el/interfaces';
 import React, { useState, useCallback, useEffect } from 'react';
 import { BankAppAPI } from '../helpers/BankAPI';
-// import { BankAppAPI } from '../helpers/BankAPI';
 
 export const LoginForm = () => {
   // Store the username so we can reference it in a submit handler

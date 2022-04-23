@@ -1,0 +1,22 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: nrwl/nx-set-shas@v2
+      - run: npm ci
+
+      - run: npx nx workspace-lint
+      - run: npx nx format:check
+      - run: npx nx affected --target=lint
+      - run: npx nx affected --target=test --code-coverage
+      - run: npx nx affected --target=test:e2e --code-coverage

@@ -1,6 +1,7 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import './styles.css';
+import config from '../config';
+import '../styles/tailwind.css';
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   import('../mocks').then(({ setupMocks }) => setupMocks());
@@ -10,11 +11,13 @@ function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Welcome to client!</title>
+        <title>{config.appName}</title>
+        <link rel="icon" type="image/svg+xml" href="data:image/x-icon;" />
       </Head>
-      <main className="app">
+
+      <div className="dark:text-white">
         <Component {...pageProps} />
-      </main>
+      </div>
     </>
   );
 }
