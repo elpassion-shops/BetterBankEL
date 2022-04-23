@@ -22,10 +22,11 @@ export interface IGetTransfersByDateRangeData {
 
 export interface ISendTransferResponse {
   isCorrect: boolean;
-  transferID: number;
+  transferID: string;
   accountBalance: number;
   message: string;
 }
+
 export type IJSONData = IGetTransfersByDateRangeData | ITransfer;
 
 export interface IBankAppAPI {
