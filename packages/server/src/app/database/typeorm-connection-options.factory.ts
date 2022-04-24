@@ -1,6 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const ormConfigurations: TypeOrmModuleOptions[] = require('./typeorm.config');
 
 export const typeOrmConnectionOptionsFactory = (
