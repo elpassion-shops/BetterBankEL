@@ -106,7 +106,7 @@ describe(SendTransferForm.name, () => {
       expect(transferTitleInputElement.value).toBe(transferTitle);
     });
 
-    it('input for "From the account" should by initially empty', async () => {
+    it('should be able to type "From account"', async () => {
       // given
       const fromAccountInputElement = context.getByPlaceholderText(
         /From account/i
@@ -120,7 +120,7 @@ describe(SendTransferForm.name, () => {
       expect(fromAccountInputElement.value).toBe(fromAccount);
     });
 
-    it('input for "Transfer date" should by initially empty', async () => {
+    it('should be able to type Transfer date', async () => {
       // given
       const transferDate = '2011-10-05T14:48:00.000Z';
       const transferDateInputElement = context.getByPlaceholderText(
