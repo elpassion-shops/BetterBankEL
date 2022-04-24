@@ -1,5 +1,3 @@
-import { User } from './entities/User.entity';
-
 module.exports = [
   {
     name: 'default', //for all environments
@@ -13,7 +11,7 @@ module.exports = [
 
     autoLoadEntities: true,
 
-    entities: [User],
+    entities: [], //TODO: Add entities
     migrationsTableName: 'migrations',
     migrations: ['dist/**/migrations/*.js'],
     cli: {
@@ -38,7 +36,7 @@ module.exports = [
 
     autoLoadEntities: true,
 
-    entities: [User],
+    entities: [], //TODO: Add entities
     migrationsTableName: 'migrations',
     migrations: ['dist/**/migrations/*.js'],
     cli: {
