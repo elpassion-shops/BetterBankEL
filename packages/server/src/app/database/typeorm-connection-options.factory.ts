@@ -1,11 +1,10 @@
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const ormConfigurations: TypeOrmModuleOptions[] = require('./typeorm.config');
 
 export const typeOrmConnectionOptionsFactory = (
-  configService: ConfigService,
+  configService: ConfigService
 ): TypeOrmModuleOptions => {
   const nodeEnv = configService.get('NODE_ENV');
   const databaseUrl = configService.get('DATABASE_URL') as string;
@@ -24,7 +23,7 @@ export const typeOrmConnectionOptionsFactory = (
 
   if (!ormConfig) {
     throw new Error(
-      `TypeORM config: "${ormConfigName}" could not be found. Please check ormconfig.ts file`,
+      `TypeORM config: "${ormConfigName}" could not be found. Please check ormconfig.ts file`
     );
   }
 
