@@ -1,3 +1,5 @@
+packages/client/.env.production.local
+
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
@@ -44,3 +46,7 @@ packages/server/.env.local
 
 # mockServiceWorker
 packages/client/public/mockServiceWorker.js
+
+# ENVs
+packages/client/.env.production.local
+packages/client/.env.development.local
