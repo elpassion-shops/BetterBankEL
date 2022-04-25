@@ -19,7 +19,7 @@ export class TransferDto {
   date: string;
   @IsNumber()
   @IsNotEmpty()
-  amount: BigInteger;
+  amount: number;
   @IsNotEmpty()
   @IsString()
   title: string;
