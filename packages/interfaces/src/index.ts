@@ -2,7 +2,7 @@ export interface ITransfer {
   id?: number;
   type: 'outgoing' | 'incoming';
   date: string;
-  amount: BigInteger;
+  amount: number;
   title: string;
   address?: string;
   fromOrToName: string;
@@ -12,7 +12,7 @@ export interface ITransfer {
 export interface IAccountDetails {
   id: number;
   userId: number;
-  accountBalance: BigInteger;
+  accountBalance: number;
   accountNumber: string;
 }
 

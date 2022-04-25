@@ -9,7 +9,7 @@ export class AccountDetailsDto {
   userId: number;
   @IsNumber()
   @IsNotEmpty()
-  accountBalance: BigInteger;
+  accountBalance: number;
   @IsString()
   @IsNotEmpty()
   accountNumber: string;
