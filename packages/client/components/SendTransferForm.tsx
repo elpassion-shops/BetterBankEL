@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import 'tailwindcss/tailwind.css';
-import Modal from './modal';
+import Modal from './Modal';
 
 export default function SendTransfer() {
   const [isModalOpen, setIsModalOpen] = useState(false);
