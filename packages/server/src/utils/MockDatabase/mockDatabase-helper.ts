@@ -10,7 +10,7 @@ export class MockDatabaseHelper {
   }
 
   static setIsCorrect(accountBalanceAfterTransfer: number) {
-    return accountBalanceAfterTransfer >= 0 ? true : false;
+    return accountBalanceAfterTransfer >= 0;
   }
 
   static setMessage(accountBalanceAfterTransfer: number) {
