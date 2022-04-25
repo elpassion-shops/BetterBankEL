@@ -24,3 +24,17 @@
  * your stylesheet by default.
  */
 @tailwind variants;
+
+input:focus-within ~ label,
+input:not(:placeholder-shown) ~ label {
+  @apply transform scale-75 -translate-y-8;
+}
+
+input:focus-within ~ label {
+  @apply text-blue-500;
+}
+
+.outline input:focus-within ~ label,
+.outline input:not(:placeholder-shown) ~ label {
+  @apply transform scale-75 -translate-y-4 ;
+}

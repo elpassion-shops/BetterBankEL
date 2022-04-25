@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render } from '@testing-library/react';
+import { act, render, RenderResult } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import 'whatwg-fetch';
 import { mswServer } from '../mocks/mswServer';
@@ -17,7 +17,11 @@ beforeEach(() => {
     context = render(<SendTransferForm />);
   });
 });
-let context = render(<SendTransferForm />);
+let context: RenderResult<
+  typeof import('@testing-library/dom/types/queries'),
+  HTMLElement,
+  HTMLElement
+>;
 
 describe(SendTransferForm.name, () => {
   describe('tests for basic render', () => {
@@ -36,94 +40,128 @@ describe(SendTransferForm.name, () => {
   });
 
   describe('tests for SendTransferForm initially fields', () => {
-    it('input for "To account number" should by initially empty', async () => {
+    it('input for Recipient name should by initially empty', async () => {
       // given
-      const accountNumberInputElement = context.getByPlaceholderText(
-        /To account number/i
+      const recipientNameInputElement = context.getByLabelText(
+        /Recipient/i
       ) as HTMLInputElement;
 
       // then
-      expect(accountNumberInputElement.value).toBe('');
+      expect(recipientNameInputElement.value).toBe('');
     });
 
-    it('input for "Title of transfer" should by initially empty', async () => {
+    it('input for "From account" should by initially empty', async () => {
       // given
-      const transferTitleInputElement = context.getByPlaceholderText(
-        /Title of transfer/i
-      ) as HTMLInputElement;
-
-      // then
-      expect(transferTitleInputElement.value).toBe('');
-    });
-
-    it('input for "From the account" should by initially empty', async () => {
-      // given
-      const fromAccountElementElement = context.getByPlaceholderText(
+      const senderBankAccountNumberInputElement = context.getByLabelText(
         /From account/i
       ) as HTMLInputElement;
 
       // then
-      expect(fromAccountElementElement.value).toBe('');
+      expect(senderBankAccountNumberInputElement.value).toBe('');
+    });
+
+    it('input for "To account number" should by initially empty', async () => {
+      // given
+      const receiverBankAccountNumberInputElement = context.getByLabelText(
+        /To account number/i
+      ) as HTMLInputElement;
+
+      // then
+      expect(receiverBankAccountNumberInputElement.value).toBe('');
     });
 
     it('input for "Transfer date" should by initially empty', async () => {
       // given
-      const transferDateInputElement = context.getByPlaceholderText(
+      const transferDateInputElement = context.getByLabelText(
         /Transfer date/i
       ) as HTMLInputElement;
 
       // then
       expect(transferDateInputElement.value).toBe('');
     });
+
+    it('input for "Transfer title" should by initially empty', async () => {
+      // given
+      const transferTitleInputElement = context.getByLabelText(
+        /Transfer title/i
+      ) as HTMLInputElement;
+
+      // then
+      expect(transferTitleInputElement.value).toBe('');
+    });
   });
 
   describe('tests for SendTransferForm fields typing', () => {
     it('should be able to type account number', async () => {
       // given
-      const bankAccountNumber = '61109010140000071219812874';
-      const accountNumberInputElement = context.getByPlaceholderText(
-        /To account number/i
+      const recipientName = 'Jarosław Psikuta';
+      const recipientNameInputElement = context.getByLabelText(
+        /Recipient/i
       ) as HTMLInputElement;
 
       // when
-      await userEvent.type(accountNumberInputElement, bankAccountNumber);
+      await userEvent.type(recipientNameInputElement, recipientName);
 
       // then
-      expect(accountNumberInputElement.value).toBe(bankAccountNumber);
-    });
-
-    it('should be able to type title for transfer', async () => {
-      // given
-      const transferTitle = 'Wypłata z EL Passion';
-      const transferTitleInputElement = context.getByPlaceholderText(
-        /Title of transfer/i
-      ) as HTMLInputElement;
-
-      // when
-      await userEvent.type(transferTitleInputElement, transferTitle);
-
-      // then
-      expect(transferTitleInputElement.value).toBe(transferTitle);
+      expect(recipientNameInputElement.value).toBe(recipientName);
     });
 
     it('should be able to type "From account"', async () => {
       // given
-      const fromAccountInputElement = context.getByPlaceholderText(
+      const senderBankAccountNumberInputElement = context.getByLabelText(
         /From account/i
       ) as HTMLInputElement;
-      const fromAccount = '61109010140000071219812874';
+      const senderBankAccountNumber = '61109010140000071219812874';
 
       // when
-      await userEvent.type(fromAccountInputElement, fromAccount);
+      await userEvent.type(
+        senderBankAccountNumberInputElement,
+        senderBankAccountNumber
+      );
 
       // then
-      expect(fromAccountInputElement.value).toBe(fromAccount);
+      expect(senderBankAccountNumberInputElement.value).toBe(
+        senderBankAccountNumber
+      );
     });
 
-    it('should be able to type Transfer date', async () => {
+    it('should be able to type "Adress"', async () => {
+      // given
+      const receiverAddressInputElement = context.getByLabelText(
+        /From account/i
+      ) as HTMLInputElement;
+      const receiverAddress = 'Warszawa, ul. Władysława Jagiellońskiego 42';
+
+      // when
+      await userEvent.type(receiverAddressInputElement, receiverAddress);
+
+      // then
+      expect(receiverAddressInputElement.value).toBe(receiverAddress);
+    });
+
+    it('should be able to type "To account number"', async () => {
+      // given
+      const receiverBankAccountNumber = '61109010140000071219812874';
+      const receiverBankAccountNumberInputElement = context.getByLabelText(
+        /To account number/i
+      ) as HTMLInputElement;
+
+      // when
+      await userEvent.type(
+        receiverBankAccountNumberInputElement,
+        receiverBankAccountNumber
+      );
+
+      // then
+      expect(receiverBankAccountNumberInputElement.value).toBe(
+        receiverBankAccountNumber
+      );
+    });
+
+    it('should be able to type "Transfer date"', async () => {
       // given
       const transferDate = '2011-10-05T14:48:00.000Z';
-      const transferDateInputElement = context.getByPlaceholderText(
+      const transferDateInputElement = context.getByLabelText(
         /Transfer date/i
       ) as HTMLInputElement;
 
@@ -133,5 +171,19 @@ describe(SendTransferForm.name, () => {
       // then
       expect(transferDateInputElement.value).toBe(transferDate);
     });
+  });
+
+  it('should be able to type "Transfer title"', async () => {
+    // given
+    const transferTitle = 'Wypłata z EL Passion';
+    const transferTitleInputElement = context.getByLabelText(
+      /Transfer title/i
+    ) as HTMLInputElement;
+
+    // when
+    await userEvent.type(transferTitleInputElement, transferTitle);
+
+    // then
+    expect(transferTitleInputElement.value).toBe(transferTitle);
   });
 });
