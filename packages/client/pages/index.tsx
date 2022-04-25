@@ -1,5 +1,11 @@
 import Link from 'next/link';
+import React from 'react';
 import config from '../config';
+import { BankAppAPI } from '../helpers/BankAPI';
+
+export const BankAppApiContext = React.createContext({
+  BankAppAPI: BankAppAPI,
+});
 
 export function Index() {
   return (
