@@ -34,7 +34,7 @@ export interface IGetTransfersByDateRangeData {
 
 export interface ISendTransferResponse {
   isCorrect: boolean;
-  transferID: string;
+  transferID: number;
   accountBalance: number;
   message: string;
 }
