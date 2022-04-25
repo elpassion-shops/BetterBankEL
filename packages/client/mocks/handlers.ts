@@ -1,5 +1,9 @@
 import { rest } from 'msw';
-import { ITransfer, ITransferHistory } from '@bank-el/interfaces';
+import {
+  ISendTransferResponse,
+  ITransfer,
+  ITransferHistory,
+} from '@bank-el/interfaces';
 
 interface login {
   username: string;
@@ -8,54 +12,84 @@ interface login {
 const mockTransfers: ITransferHistory = {
   transfers: [
     {
-      id: '1',
+      id: 1,
       type: 'outgoing',
       date: '2020-04-23T14:48:00.000Z',
-      amount: 100,
+      amount: new Uint8Array(42),
+      title: 'lorem ipsum dipisem',
+      address: 'Warsaw, Poland',
       fromOrToName: 'Aleks',
+      accountId: 1,
     },
     {
-      id: '2',
+      id: 2,
+      type: 'incoming',
+      date: '2020-04-20T14:48:00.000Z',
+      amount: new Uint8Array(100),
+      title: 'lorem ipsum dipisem',
+      address: 'Poznań, Poland',
+      fromOrToName: 'Michał',
+      accountId: 2,
+    },
+    {
+      id: 3,
       type: 'incoming',
       date: '2020-04-15T14:48:00.000Z',
-      amount: 200,
+      amount: new Uint8Array(200),
+      title: 'lorem ipsum dipisem',
+      address: 'Toruń, Poland',
+      fromOrToName: 'Hubert',
+      accountId: 3,
+    },
+    {
+      id: 4,
+      type: 'incoming',
+      date: '2020-04-10T14:48:00.000Z',
+      amount: new Uint8Array(300),
+      title: 'lorem ipsum dipisem',
+      address: 'Warsaw, Poland',
       fromOrToName: 'Krystian',
+      accountId: 4,
     },
     {
-      id: '3',
+      id: 5,
       type: 'outgoing',
-      date: '2020-04-03T14:48:00.000Z',
-      amount: 300,
+      date: '2020-04-07T14:48:00.000Z',
+      amount: new Uint8Array(400),
+      title: 'lorem ipsum dipisem',
+      address: 'Warsaw, Poland',
+      fromOrToName: 'Aleks',
+      accountId: 1,
+    },
+    {
+      id: 6,
+      type: 'outgoing',
+      date: '2020-03-24T14:48:00.000Z',
+      amount: new Uint8Array(500),
+      title: 'lorem ipsum dipisem',
+      address: 'Warsaw, Poland',
       fromOrToName: 'Michał',
+      accountId: 2,
     },
     {
-      id: '4',
-      type: 'incoming',
-      date: '2020-03-22T14:48:00.000Z',
-      amount: 400,
-      fromOrToName: 'Hubert',
-    },
-    {
-      id: '5',
+      id: 7,
       type: 'outgoing',
-      date: '2020-03-15T14:48:00.000Z',
-      amount: 500,
-      fromOrToName: 'Aleksander',
-    },
-    {
-      id: '6',
-      type: 'incoming',
-      date: '2020-03-06T14:48:00.000Z',
-      amount: 600,
-      fromOrToName: 'Michał',
-    },
-
-    {
-      id: '7',
-      type: 'outgoing',
-      date: '2020-02-07T14:48:00.000Z',
-      amount: 700,
+      date: '2020-03-17T14:48:00.000Z',
+      amount: new Uint8Array(600),
+      title: 'lorem ipsum dipisem',
+      address: 'Warsaw, Poland',
       fromOrToName: 'Hubert',
+      accountId: 3,
+    },
+    {
+      id: 8,
+      type: 'outgoing',
+      date: '2020-06-12T14:48:00.000Z',
+      amount: new Uint8Array(700),
+      title: 'lorem ipsum dipisem',
+      address: 'Warsaw, Poland',
+      fromOrToName: 'Krystian',
+      accountId: 4,
     },
   ],
 };
@@ -82,14 +116,14 @@ export const handlers = [
   rest.post<ITransfer>(
     `${process.env.NEXT_PUBLIC_SERVER}/api/transfers/new`,
     (_req, res, ctx) => {
-      return res(
-        ctx.json({
-          isCorrect: true,
-          transferID: Math.floor(Math.random() * 1000 + 10),
-          accountBalance: 6666,
-          message: 'Mock transfer was created',
-        })
-      );
+      const sendTransferResponse: ISendTransferResponse = {
+        isCorrect: true,
+        transferID: String(Math.floor(Math.random() * 1000 + 10)),
+        accountBalance: 6666,
+        message: 'Mock transfer was created',
+      };
+
+      return res(ctx.json(sendTransferResponse));
     }
   ),
 
