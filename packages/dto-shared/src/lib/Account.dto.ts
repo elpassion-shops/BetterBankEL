@@ -10,7 +10,7 @@ export class IAccountDetails {
   @IsNumber()
   @IsNotEmpty()
   accountBalance: BigInteger;
-  @IsNumber()
   @IsString()
+  @IsNotEmpty()
   accountNumber: string;
 }

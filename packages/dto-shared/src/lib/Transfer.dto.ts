@@ -3,11 +3,13 @@ import {
   IsBoolean,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
 } from 'class-validator';
 
 export class ITransfer {
   @IsNumber()
+  @IsOptional()
   id?: number;
   @IsString()
   @IsNotEmpty()
