@@ -1,14 +1,26 @@
 export interface ITransfer {
-  id?: string;
+  id?: number;
   type: 'outgoing' | 'incoming';
   date: string;
-  amount: number;
-  fromOrToName?: string;
+  amount: BigInteger;
+  title: string;
+  address?: string;
+  fromOrToName: string;
+  accountId: number;
 }
 
 export interface IAccountDetails {
-  accountBalance: number;
+  id: number;
+  userId: number;
+  accountBalance: BigInteger;
   accountNumber: string;
+}
+
+export interface IUser {
+  id?: number;
+  name: string;
+  password: string;
+  email: string;
 }
 
 export interface ITransferHistory {
