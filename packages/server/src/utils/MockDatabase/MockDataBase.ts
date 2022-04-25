@@ -13,12 +13,12 @@ export class MockDataBase {
     return this.accountDetails;
   }
 
-  addTransferToList(mockTransfer: ITransfer, id: string) {
+  addTransferToList(mockTransfer: ITransfer, id) {
     this.transfers.push({ id, ...mockTransfer });
   }
 
   sendTransfer(mockTransfer: ITransfer): ISendTransferResponse {
-    const transferId = Math.random().toString();
+    const transferId = Math.random();
     this.addTransferToList(mockTransfer, transferId);
 
     const accountBalanceAfterTransfer =

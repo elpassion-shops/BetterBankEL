@@ -3,6 +3,7 @@
   "projects": {
     "client": "packages/client",
     "client-e2e": "packages/client-e2e",
+    "dto-shared": "packages/dto-shared",
     "interfaces": "packages/interfaces",
     "server": "packages/server"
   }

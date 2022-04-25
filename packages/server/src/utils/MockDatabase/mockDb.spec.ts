@@ -6,6 +6,8 @@ describe('MockDataBase', () => {
   let mockAccountDetails: IAccountDetails;
 
   const mockTransfer: ITransfer = {
+    accountId: 0,
+    title: 'Zwrot',
     type: 'incoming',
     date: new Date().toString(),
     amount: 1000,
@@ -13,6 +15,8 @@ describe('MockDataBase', () => {
   };
 
   const mockTransferMinus: ITransfer = {
+    accountId: 0,
+    title: 'Zwrot',
     type: 'outgoing',
     date: new Date().toString(),
     amount: 1000,
@@ -21,6 +25,8 @@ describe('MockDataBase', () => {
 
   beforeEach(() => {
     mockAccountDetails = {
+      id: 0,
+      userId: 0,
       accountBalance: 1000,
       accountNumber: '1234567890',
     };
@@ -39,7 +45,7 @@ describe('MockDataBase', () => {
     expect(mockDb.sendTransfer(mockTransfer)).toEqual({
       isCorrect: true,
       accountBalance: 2000,
-      transferID: expect.any(String),
+      transferID: expect.any(Number),
       message: 'ok',
     });
   });
@@ -48,7 +54,7 @@ describe('MockDataBase', () => {
     expect(mockDb.sendTransfer(mockTransferMinus)).toEqual({
       isCorrect: true,
       accountBalance: 0,
-      transferID: expect.any(String),
+      transferID: expect.any(Number),
       message: 'ok',
     });
   });
@@ -58,7 +64,7 @@ describe('MockDataBase', () => {
     expect(mockDb.sendTransfer(mockTransferMinus)).toEqual({
       isCorrect: false,
       accountBalance: 0,
-      transferID: expect.any(String),
+      transferID: expect.any(Number),
       message: 'Something went wrong',
     });
   });
@@ -67,7 +73,7 @@ describe('MockDataBase', () => {
     const transfer = mockTransfer;
     mockDb.sendTransfer(transfer);
     expect(mockDb.transfers[0]).toEqual({
-      id: expect.any(String),
+      id: expect.any(Number),
       ...transfer,
     });
   });

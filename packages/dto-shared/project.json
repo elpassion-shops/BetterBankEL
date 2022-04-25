@@ -1,0 +1,32 @@
+{
+  "root": "packages/dto-shared",
+  "sourceRoot": "packages/dto-shared/src",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/dto-shared",
+        "main": "packages/dto-shared/src/index.ts",
+        "tsConfig": "packages/dto-shared/tsconfig.lib.json",
+        "assets": ["packages/dto-shared/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/dto-shared/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/dto-shared"],
+      "options": {
+        "jestConfig": "packages/dto-shared/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

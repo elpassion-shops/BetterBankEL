@@ -2,6 +2,8 @@ packages/client/.env.production.local
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+/data/
+
 # compiled output
 /dist
 /tmp
@@ -50,3 +52,4 @@ packages/client/public/mockServiceWorker.js
 # ENVs
 packages/client/.env.production.local
 packages/client/.env.development.local
+

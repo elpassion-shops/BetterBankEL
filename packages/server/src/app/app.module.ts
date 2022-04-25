@@ -9,9 +9,9 @@ import { DatabaseModule } from './database/database.module';
   imports: [
     ConfigModule.forRoot({
       envFilePath: [
-        `.env.${process.env.NODE_ENV || 'development'}.local`,
-        '.env',
-        `.env.${process.env.NODE_ENV || 'development'}`,
+        `packages/server/.env.${process.env.NODE_ENV || 'development'}.local`,
+        'packages/server/.env',
+        `packages/server/.env.${process.env.NODE_ENV || 'development'}`,
       ],
       cache: true,
       isGlobal: true,
