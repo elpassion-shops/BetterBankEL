@@ -173,8 +173,6 @@ export default function SendTransfer() {
           </label>
         </div>
 
-        <input type="text" placeholder="name" {...register('name', {})} />
-
         <input
           value="Send"
           type="submit"
