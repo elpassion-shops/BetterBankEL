@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { AccountModule } from './account/account.module';
 import { DatabaseModule } from './database/database.module';
 import { LoginModule } from '../login/login.module';
+import { MeModule } from '../me/me.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { LoginModule } from '../login/login.module';
     }),
     AccountModule,
     LoginModule,
+    MeModule,
     DatabaseModule,
   ],
   controllers: [AppController],
