@@ -1,6 +1,10 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import 'tailwindcss/tailwind.css';
+import Modal from './modal';
 
 export default function SendTransfer() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     register,
     handleSubmit,
@@ -14,43 +18,128 @@ export default function SendTransfer() {
   };
 
   return (
-    <div>
+    <div className="bg-white	p-4">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col text-gray-500"
+        className="flex flex-col overflow-hidden relative z-0 "
       >
-        <input
-          type="text"
-          placeholder="Receiver"
-          {...register('Receiver', {})}
-        />
+        <div className="relative z-0 outline w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+          <input
+            type="text"
+            name="recipientName"
+            id="recipientName"
+            placeholder=" "
+            className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
+          />
+          <label
+            htmlFor="recipientName"
+            className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
+            {...register('recipientName', {})}
+          >
+            Recipient
+          </label>
+        </div>
+
+        <div className="relative z-0 outline w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+          <input
+            type="text"
+            name="senderBankAccountNumber"
+            id="senderBankAccountNumber"
+            placeholder=" "
+            className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
+          />
+          <label
+            htmlFor="senderBankAccountNumber"
+            className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
+            {...register('senderBankAccountNumber', {})}
+          >
+            From account
+          </label>
+        </div>
+
+        <div className="relative z-0 outline w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+          <input
+            type="text"
+            name="receiverAddress"
+            id="receiverAddress"
+            placeholder=" "
+            className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
+          />
+          <label
+            htmlFor="receiverAddress"
+            className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
+            {...register('receiverAddress', {})}
+          >
+            Enter address (optional)
+          </label>
+        </div>
+
+        <div className="relative z-0 outline w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+          <input
+            type="text"
+            name="receiverBankAccountNumber"
+            id="receiverBankAccountNumber"
+            placeholder=" "
+            className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
+          />
+          <label
+            htmlFor="receiverBankAccountNumber"
+            className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
+            {...register('receiverBankAccountNumber', {})}
+          >
+            To account number
+          </label>
+        </div>
+
+        <div className="relative z-0 outline w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+          <input
+            type="text"
+            name="transferDate"
+            id="transferDate"
+            placeholder=" "
+            className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
+          />
+          <label
+            htmlFor="transferDate"
+            className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
+            {...register('transferDate', {})}
+          >
+            Transfer date
+          </label>
+        </div>
+
+        <div className="relative z-0 outline w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+          <input
+            type="text"
+            name="transferTitle"
+            id="transferTitle"
+            placeholder=" "
+            className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
+          />
+          <label
+            htmlFor="transferTitle"
+            className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
+            {...register('Transfer title', {})}
+          >
+            Transfer title
+          </label>
+        </div>
 
         <input
-          type="text"
-          placeholder="To account number"
-          {...register('To account number', {})}
+          value="Send"
+          type="submit"
+          className="bg-red-500 hover:bg-red-600 text-white font-light font-bold py-1 px-2 mb-7 rounded-full"
         />
 
-        <input
-          type="text"
-          placeholder="Title of transfer"
-          {...register('Title of transfer', {})}
-        />
-
-        <input
-          type="text"
-          placeholder="From account"
-          {...register('From account', {})}
-        />
-
-        <input
-          type="datetime"
-          placeholder="Transfer date"
-          {...register('Transfer date', {})}
-        />
-
-        <input value="Send" type="submit" />
+        <button
+          value="Cancel"
+          className="bg-white-500 hover:bg-gray-200 text-red-500 font-bold font-light py-1 px-2 mb-7 rounded-full"
+        >
+          Cancel
+        </button>
       </form>
+
+      {isModalOpen && <Modal />}
     </div>
   );
 }
