@@ -1,18 +1,49 @@
-import { useState } from 'react';
+import { ISendTransferResponse, ITransfer } from '@bank-el/interfaces';
+import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import 'tailwindcss/tailwind.css';
+import { BankAppApiContext } from '../pages';
 import Modal from './Modal';
 
+export interface ITransferFormData {
+  receiverAddress: string;
+  receiverBankAccountNumber: string;
+  recipientName: string;
+  senderBankAccountNumber: string;
+  transferAmount: number;
+  transferDate: Date;
+  transferTitle: string;
+}
+
 export default function SendTransfer() {
+  const { BankAppAPI } = useContext(BankAppApiContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sendTranferResponse, setSendTranferResponse] =
+    useState<ISendTransferResponse | null>(null);
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    console.log(data, errors);
+
+  const onSubmit = (data: ITransferFormData) => {
+    console.log(data);
+
+    const transferData: ITransfer = {
+      type: 'outgoing',
+      date: (data.transferDate && data.transferDate.toString()) || '',
+      amount: data.transferAmount,
+      title: data.transferTitle,
+      address: data.receiverAddress || '',
+      fromOrToName: data.recipientName,
+      accountId: 1,
+    };
+
+    BankAppAPI.sendTransfer(transferData).then((data) => {
+      setSendTranferResponse(data);
+    });
 
     reset();
   };
@@ -30,11 +61,11 @@ export default function SendTransfer() {
             id="recipientName"
             placeholder=" "
             className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
+            {...register('recipientName', {})}
           />
           <label
             htmlFor="recipientName"
             className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
-            {...register('recipientName', {})}
           >
             Recipient
           </label>
@@ -42,16 +73,16 @@ export default function SendTransfer() {
 
         <div className="relative z-0 outline w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
           <input
-            type="text"
+            type="number"
             name="senderBankAccountNumber"
             id="senderBankAccountNumber"
             placeholder=" "
             className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
+            {...register('senderBankAccountNumber', {})}
           />
           <label
             htmlFor="senderBankAccountNumber"
             className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
-            {...register('senderBankAccountNumber', {})}
           >
             From account
           </label>
@@ -64,11 +95,11 @@ export default function SendTransfer() {
             id="receiverAddress"
             placeholder=" "
             className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
+            {...register('receiverAddress', {})}
           />
           <label
             htmlFor="receiverAddress"
             className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
-            {...register('receiverAddress', {})}
           >
             Enter address (optional)
           </label>
@@ -81,11 +112,11 @@ export default function SendTransfer() {
             id="receiverBankAccountNumber"
             placeholder=" "
             className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
+            {...register('receiverBankAccountNumber', {})}
           />
           <label
             htmlFor="receiverBankAccountNumber"
             className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
-            {...register('receiverBankAccountNumber', {})}
           >
             To account number
           </label>
@@ -93,16 +124,16 @@ export default function SendTransfer() {
 
         <div className="relative z-0 outline w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
           <input
-            type="text"
+            type="date"
             name="transferDate"
             id="transferDate"
             placeholder=" "
             className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
+            {...register('transferDate', {})}
           />
           <label
             htmlFor="transferDate"
             className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
-            {...register('transferDate', {})}
           >
             Transfer date
           </label>
@@ -115,15 +146,34 @@ export default function SendTransfer() {
             id="transferTitle"
             placeholder=" "
             className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
+            {...register('transferTitle', {})}
           />
           <label
             htmlFor="transferTitle"
             className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
-            {...register('Transfer title', {})}
           >
             Transfer title
           </label>
         </div>
+
+        <div className="relative z-0 outline w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+          <input
+            type="number"
+            name="transferAmount"
+            id="transferAmount"
+            placeholder=" "
+            className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
+            {...register('transferAmount', {})}
+          />
+          <label
+            htmlFor="transferAmount"
+            className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
+          >
+            Amount
+          </label>
+        </div>
+
+        <input type="text" placeholder="name" {...register('name', {})} />
 
         <input
           value="Send"

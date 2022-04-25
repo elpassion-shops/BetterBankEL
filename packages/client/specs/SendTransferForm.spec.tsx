@@ -111,7 +111,7 @@ describe(SendTransferForm.name, () => {
       const senderBankAccountNumberInputElement = context.getByLabelText(
         /From account/i
       ) as HTMLInputElement;
-      const senderBankAccountNumber = '61109010140000071219812874';
+      const senderBankAccountNumber = '42';
 
       // when
       await userEvent.type(
@@ -128,7 +128,7 @@ describe(SendTransferForm.name, () => {
     it('should be able to type "Adress"', async () => {
       // given
       const receiverAddressInputElement = context.getByLabelText(
-        /From account/i
+        /Enter address/i
       ) as HTMLInputElement;
       const receiverAddress = 'Warszawa, ul. Władysława Jagiellońskiego 42';
 
@@ -160,7 +160,7 @@ describe(SendTransferForm.name, () => {
 
     it('should be able to type "Transfer date"', async () => {
       // given
-      const transferDate = '2011-10-05T14:48:00.000Z';
+      const transferDate = '2022-04-26';
       const transferDateInputElement = context.getByLabelText(
         /Transfer date/i
       ) as HTMLInputElement;
