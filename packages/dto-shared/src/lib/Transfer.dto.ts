@@ -17,6 +17,8 @@ export class TransferDto {
   @IsNotEmpty()
   @IsString()
   date: string;
+  @IsNumber()
+  @IsNotEmpty()
   amount: BigInteger;
   @IsNotEmpty()
   @IsString()
