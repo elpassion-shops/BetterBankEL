@@ -61,4 +61,4 @@ export class SendTransferResponseDto {
   message: string;
 }
 
-export type IJSONData = IGetTransfersByDateRangeData | ITransfer;
+export type IJSONData = GetTransfersByDateRangeDataDto | TransferDto;
