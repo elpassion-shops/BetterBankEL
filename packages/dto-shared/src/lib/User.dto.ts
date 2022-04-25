@@ -6,7 +6,7 @@ import {
   IsString,
 } from 'class-validator';
 
-export class IUser {
+export class UserDto {
   @IsNumber()
   @IsOptional()
   id?: number;

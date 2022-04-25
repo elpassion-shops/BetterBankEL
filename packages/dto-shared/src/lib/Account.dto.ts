@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class IAccountDetails {
+export class AccountDetailsDto {
   @IsNumber()
   @IsNotEmpty()
   id: number;

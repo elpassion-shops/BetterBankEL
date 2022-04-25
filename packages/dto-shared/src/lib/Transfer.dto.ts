@@ -7,7 +7,7 @@ import {
   IsString,
 } from 'class-validator';
 
-export class ITransfer {
+export class TransferDto {
   @IsNumber()
   @IsOptional()
   id?: number;
@@ -32,12 +32,12 @@ export class ITransfer {
   accountId: number;
 }
 
-export class ITransferHistory {
+export class TransferHistoryDto {
   @IsArray()
-  transfers: ITransfer[];
+  transfers: TransferDto[];
 }
 
-export class IGetTransfersByDateRangeData {
+export class GetTransfersByDateRangeDataDto {
   @IsNotEmpty()
   @IsString()
   from: string;
@@ -46,7 +46,7 @@ export class IGetTransfersByDateRangeData {
   to: string;
 }
 
-export class ISendTransferResponse {
+export class SendTransferResponseDto {
   @IsNotEmpty()
   @IsBoolean()
   isCorrect: boolean;
