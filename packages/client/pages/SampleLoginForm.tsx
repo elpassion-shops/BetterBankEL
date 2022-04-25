@@ -23,17 +23,6 @@ export const LoginForm = () => {
       BankAppAPI.getTransfersHistory().then((data) => {
         console.log('getTransfersHistory', data);
       });
-
-      const mockTransfer: ITransfer = {
-        type: 'outgoing',
-        date: '2020-04-25T14:48:00.000Z',
-        amount: 666,
-        fromOrToName: 'El Passion',
-      };
-
-      BankAppAPI.sendTransfer(mockTransfer).then((data) => {
-        console.log('sendTransfer', data);
-      });
     }, 500);
   }, []);
 
