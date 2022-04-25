@@ -10,6 +10,16 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  rewrites: [
+    {
+      source: '/login',
+      destination: 'http://localhost:3333/api/login',
+    },
+    {
+      source: '/me',
+      destination: 'http://localhost:3333/api/me',
+    },
+  ],
 };
 
 module.exports = withNx(nextConfig);
