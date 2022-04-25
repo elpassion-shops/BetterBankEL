@@ -1,36 +1,48 @@
 import { useEffect, useState } from 'react';
 import SendTransferForm from '../components/SendTransferForm';
 import { BankAppAPI } from '../helpers/BankAPI';
+import { IAccountDetails } from '@bank-el/interfaces';
 
 export function Account() {
-  const [balance, setBalance] = useState<number | null>(null);
-  const [accountNumber, setAccountNumber] = useState<number | null>(null);
+  const [accountDetails, setAccountDetails] = useState<IAccountDetails | null>(
+    null
+  );
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
-      // ! delay set to give time for msw to turn on ([MSW] Mocking enabled.)
-      BankAppAPI.getAccountDetails().then((data) => {
-        console.log('getAccountDetails', data);
-        setAccountNumber(data.accountNumber);
-        setBalance(data.accountBalance);
+    BankAppAPI.getAccountDetails().then((data) => {
+      setAccountDetails({
+        id: 0,
+        userId: 0,
+        accountNumber: data.accountNumber,
+        accountBalance: data.accountBalance,
       });
-    }, 500);
+      setIsLoaded(true);
+    });
   }, []);
+
+  if (!isLoaded) {
+    return (
+      <>
+        <div className="container mx-auto px-4">
+          <p className="text-xl font-bold text-center p-4">Loading...</p>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
       <div className="container mx-auto px-4">
         <h1 className="text-3xl font-bold underline">Account</h1>
 
-        {balance && accountNumber && (
-          <ul>
-            <li>Account number: {accountNumber}</li>
-            <li>Account balance: {balance}</li>
-          </ul>
-        )}
-      </div>
+        <ul>
+          <li>Account number: {accountDetails.accountNumber}</li>
+          <li>Account balance: {accountDetails.accountBalance}</li>
+        </ul>
 
-      <SendTransferForm />
+        <SendTransferForm />
+      </div>
     </>
   );
 }
