@@ -120,7 +120,7 @@ export const handlers = [
     (_req, res, ctx) => {
       const sendTransferResponse: ISendTransferResponse = {
         isCorrect: true,
-        transferID: String(Math.floor(Math.random() * 1000 + 10)),
+        transferID: Math.floor(Math.random() * 1000 + 10),
         accountBalance: 6666,
         message: 'Mock transfer was created',
       };
