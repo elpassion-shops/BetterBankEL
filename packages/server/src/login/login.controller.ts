@@ -4,6 +4,7 @@ import { Controller, Get, Request, Response } from '@nestjs/common';
 export class LoginController {
   @Get('/')
   async login(@Request() req, @Response({ passthrough: true }) res) {
-    return res.cookie('isDupa', 'yesItIS').status(200).json({ msg: 'ok' });
+    await res.cookie('isDupa', 'yesItIS');
+    return { status: 200, msg: 'ok' };
   }
 }
