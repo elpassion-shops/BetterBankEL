@@ -7,10 +7,11 @@ export default function AccountDetails() {
         <div className="text-lg font-bold mb-3">eKonto</div>
         <div className="font-extralight">Available funds</div>
         <div className="mb-3">
-          323,00<span className="text-xs">PLN</span>
+          323,00<span className="text-xs font-normal	">PLN</span>
         </div>
         <div className="font-extralight">
-          Upcoming payments<span className="text-xs"> 0,00 PLN</span>
+          Upcoming payments
+          <span className="text-xs font-normal	"> 0,00 PLN</span>
         </div>
       </div>
     </>
