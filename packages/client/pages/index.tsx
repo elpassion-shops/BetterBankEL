@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
+import AccountDetails from '../components/AccountDetails';
 import config from '../config';
 import { BankAppAPI } from '../helpers/BankAPI';
 
@@ -13,6 +14,7 @@ export function Index() {
       <div className="container mx-auto px-4">
         <h1 className="text-3xl font-bold underline">{config.appName}</h1>
 
+        <AccountDetails />
         <ul>
           <li>
             <Link href="/account">Account Details</Link>
