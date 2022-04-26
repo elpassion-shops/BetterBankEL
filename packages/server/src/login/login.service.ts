@@ -7,7 +7,7 @@ export class LoginService {
   async login() {
     return {
       status: 200,
-      access_token: this.jwtService.sign('someString'),
+      access_token: this.jwtService.sign({ login: 'someLogin' }),
     };
   }
 }
