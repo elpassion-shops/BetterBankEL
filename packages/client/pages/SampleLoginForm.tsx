@@ -1,4 +1,3 @@
-import { ITransfer } from '@bank-el/interfaces';
 import React, { useState, useCallback, useEffect } from 'react';
 import { BankAppAPI } from '../helpers/BankAPI';
 
