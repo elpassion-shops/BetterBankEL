@@ -1,10 +1,11 @@
-import { Controller, Get, Request, Response } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { LoginService } from './login.service';
 
 @Controller('login')
 export class LoginController {
+  constructor(private readonly loginService: LoginService) {}
   @Get('/')
-  async login(@Request() req, @Response({ passthrough: true }) res) {
-    await res.cookie('isDupa', 'yesItIS');
-    return { status: 200, msg: 'ok' };
+  async login() {
+    return this.loginService.login();
   }
 }
