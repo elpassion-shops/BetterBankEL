@@ -1,12 +1,12 @@
 import NextAuth from 'next-auth';
 import Auth0Provider from 'next-auth/providers/auth0';
-console.log(process.env);
+
 export default NextAuth({
   providers: [
     Auth0Provider({
       clientId: process.env.AUTH0_CLIENT_ID,
       clientSecret: process.env.AUTH0_CLIENT_SECRET,
-      issuer: process.env.AUTH0_ISSUER_BASE_URL,
+      issuer: process.env.AUTH0_ISSUER,
     }),
   ],
   callbacks: {
@@ -26,7 +26,4 @@ export default NextAuth({
     },
   },
   secret: process.env.AUTH0_CLIENT_SECRET,
-  pages: {
-    signIn: '/api/auth/signin',
-  },
 });
