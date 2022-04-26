@@ -1,6 +1,7 @@
 import { Account } from './entities/Account.entity';
 import { Transfer } from './entities/Transfer.entity';
 import { User } from './entities/User.entity';
+import { AccTransUserCreate1650906409425 } from './migrations/1650906409425-Acc_Trans_User_Create';
 
 module.exports = [
   {
@@ -17,9 +18,9 @@ module.exports = [
 
     entities: [User, Transfer, Account], //TODO: Add entities
     migrationsTableName: 'migrations',
-    // migrations: ['./dist/*'],
+    migrations: [AccTransUserCreate1650906409425],
     cli: {
-      migrationsDir: './src/app/database/migrations',
+      migrationsDir: './packages/server',
     },
   },
   {
