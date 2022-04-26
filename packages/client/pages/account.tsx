@@ -7,12 +7,9 @@ export function Account() {
   const [userAccount, setAccountData] = useState<IAccountDetails | null>(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      // ! delay set to give time for msw to turn on ([MSW] Mocking enabled.)
-      BankAppAPI.getAccountDetails().then((data) => {
-        setAccountData(data);
-      });
-    }, 500);
+    BankAppAPI.getAccountDetails().then((data) => {
+      setAccountData(data);
+    });
   }, []);
 
   return (

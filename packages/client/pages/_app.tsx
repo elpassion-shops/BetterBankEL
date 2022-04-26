@@ -4,7 +4,8 @@ import config from '../config';
 import '../styles/tailwind.css';
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
-  import('../mocks').then(({ setupMocks }) => setupMocks());
+  const { setupMocks } = require('../mocks');
+  setupMocks();
 }
 
 function CustomApp({ Component, pageProps }: AppProps) {
