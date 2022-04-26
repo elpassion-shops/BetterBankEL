@@ -5,6 +5,5 @@ import { JwtStrategy } from '../auth/jwt.strategy';
 
 @Module({
   controllers: [MeController],
-  providers: [MeService, JwtStrategy],
 })
 export class MeModule {}

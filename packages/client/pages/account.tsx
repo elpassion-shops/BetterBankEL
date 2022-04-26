@@ -1,6 +1,8 @@
 import { IAccountDetails } from '@bank-el/interfaces';
 import { useEffect, useState } from 'react';
+import Container from '../components/Container';
 import SendTransferForm from '../components/SendTransferForm';
+import AccountHistory from '../components/AccountHistory';
 import { BankAppAPI } from '../helpers/BankAPI';
 
 export function Account() {
@@ -14,7 +16,7 @@ export function Account() {
 
   return (
     <>
-      <div className="container mx-auto px-4">
+      <Container>
         <h1 className="text-3xl font-bold underline">Account</h1>
 
         {userAccount && (
@@ -23,9 +25,11 @@ export function Account() {
             <li>Account balance: {userAccount.accountBalance}</li>
           </ul>
         )}
-      </div>
 
-      <SendTransferForm />
+        <AccountHistory />
+      </Container>
+
+      {/*<SendTransferForm />*/}
     </>
   );
 }
