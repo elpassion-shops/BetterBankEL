@@ -18,7 +18,7 @@ export interface ITransferFormData {
 export default function SendTransfer() {
   const { BankAppAPI } = useContext(BankAppApiContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [sendTranferResponse, setSendTranferResponse] =
+  const [sendTranferResponse, setSendTransferResponse] =
     useState<ISendTransferResponse | null>(null);
 
   const {
@@ -42,7 +42,7 @@ export default function SendTransfer() {
     };
 
     BankAppAPI.sendTransfer(transferData).then((data) => {
-      setSendTranferResponse(data);
+      setSendTransferResponse(data);
     });
 
     reset();
