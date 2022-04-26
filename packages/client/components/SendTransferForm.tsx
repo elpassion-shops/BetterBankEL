@@ -1,7 +1,6 @@
 import { ISendTransferResponse, ITransfer } from '@bank-el/interfaces';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import 'tailwindcss/tailwind.css';
 import { BankAppApiContext } from '../pages';
 import Modal from './Modal';
 
