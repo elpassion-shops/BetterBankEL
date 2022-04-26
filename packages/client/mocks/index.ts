@@ -2,10 +2,10 @@ const IS_BROWSER = typeof window !== 'undefined';
 
 export const setupMocks = async () => {
   if (IS_BROWSER) {
-    const { mswWorker } = await import('./mswWorker');
-    mswWorker.start();
+    const { mswWorker } = require('./mswWorker');
+    await mswWorker.start();
   } else {
-    const { mswServer } = await import('./mswServer');
+    const { mswServer } = require('./mswServer');
     mswServer.listen();
   }
 };

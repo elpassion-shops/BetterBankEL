@@ -13,17 +13,14 @@ export const LoginForm = () => {
   const [userAccount, setAccountData] = useState(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      // ! delay set to give time for msw to turn on ([MSW] Mocking enabled.)
-      BankAppAPI.getAccountDetails().then((data) => {
-        console.log('getAccountDetails', data);
-        setAccountData(data);
-      });
+    BankAppAPI.getAccountDetails().then((data) => {
+      console.log('getAccountDetails', data);
+      setAccountData(data);
+    });
 
-      BankAppAPI.getTransfersHistory().then((data) => {
-        console.log('getTransfersHistory', data);
-      });
-    }, 500);
+    BankAppAPI.getTransfersHistory().then((data) => {
+      console.log('getTransfersHistory', data);
+    });
   }, []);
 
   // Whenever we change our username input's value
