@@ -2,5 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class MeService {
-  async me() {}
+  me(req) {
+    return { user: req.user };
+  }
 }
