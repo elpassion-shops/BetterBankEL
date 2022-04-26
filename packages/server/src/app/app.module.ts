@@ -6,6 +6,7 @@ import { AccountModule } from './account/account.module';
 import { DatabaseModule } from './database/database.module';
 import { LoginModule } from '../login/login.module';
 import { MeModule } from '../me/me.module';
+import { ShowModule } from '../show/show.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { MeModule } from '../me/me.module';
     LoginModule,
     MeModule,
     DatabaseModule,
+    ShowModule,
   ],
   controllers: [AppController],
   providers: [AppService],
