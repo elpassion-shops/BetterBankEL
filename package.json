@@ -66,6 +66,7 @@
     "cookie-parser": "^1.4.6",
     "core-js": "^3.6.5",
     "next": "12.1.5",
+    "next-http-proxy-middleware": "^1.2.4",
     "pg": "^8.7.3",
     "react": "18.0.0",
     "react-dom": "18.0.0",
