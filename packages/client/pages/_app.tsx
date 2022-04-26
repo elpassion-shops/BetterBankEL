@@ -2,12 +2,16 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import config from '../config';
 import '../styles/tailwind.css';
+import { SessionProvider } from 'next-auth/react';
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   import('../mocks').then(({ setupMocks }) => setupMocks());
 }
 
-function CustomApp({ Component, pageProps }: AppProps) {
+function CustomApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   return (
     <>
       <Head>
@@ -16,7 +20,9 @@ function CustomApp({ Component, pageProps }: AppProps) {
       </Head>
 
       <div className="dark:text-white">
-        <Component {...pageProps} />
+        <SessionProvider session={session}>
+          <Component {...pageProps} />
+        </SessionProvider>
       </div>
     </>
   );
