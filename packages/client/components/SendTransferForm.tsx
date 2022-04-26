@@ -2,7 +2,7 @@ import { ISendTransferResponse, ITransfer } from '@bank-el/interfaces';
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import 'tailwindcss/tailwind.css';
-import { BankAppApiContext } from '../pages';
+import { BankAppApiContext } from '../pages/dashboard';
 import Modal from './Modal';
 
 export interface ITransferFormData {
@@ -41,8 +41,8 @@ export default function SendTransfer() {
       accountId: 1,
     };
 
-    BankAppAPI.sendTransfer(transferData).then((data) => {
-      setSendTransferResponse(data);
+    BankAppAPI.sendTransfer(transferData).then((newTransferData) => {
+      setSendTransferResponse(newTransferData);
     });
 
     reset();
