@@ -1,3 +1,7 @@
+import { Account } from './entities/Account.entity';
+import { Transfer } from './entities/Transfer.entity';
+import { User } from './entities/User.entity';
+
 module.exports = [
   {
     name: 'default', //for all environments
@@ -11,11 +15,11 @@ module.exports = [
 
     autoLoadEntities: true,
 
-    entities: [], //TODO: Add entities
+    entities: [User, Transfer, Account], //TODO: Add entities
     migrationsTableName: 'migrations',
-    migrations: ['dist/**/migrations/*.js'],
+    // migrations: ['./dist/*'],
     cli: {
-      migrationsDir: './src/database/migrations',
+      migrationsDir: './src/app/database/migrations',
     },
   },
   {
@@ -36,7 +40,7 @@ module.exports = [
 
     autoLoadEntities: true,
 
-    entities: [], //TODO: Add entities
+    entities: [User, Transfer, Account], //TODO: Add entities
     migrationsTableName: 'migrations',
     migrations: ['dist/**/migrations/*.js'],
     cli: {
@@ -55,12 +59,12 @@ module.exports = [
 
     autoLoadEntities: true,
 
-    entities: ['./src/**/*.entity.ts'], // tests run on TS directly
-    migrations: ['./src/**/migrations/*.ts'],
+    entities: ['./packages/server/src/**/*.entity.ts'], // tests run on TS directly
+    migrations: ['./packages/server/src/**/migrations/*.ts'],
     migrationsTableName: 'migrations',
 
     cli: {
-      migrationsDir: './src/database/migrations',
+      migrationsDir: './packages/server/src/app/database/migrations',
     },
   },
 ];
