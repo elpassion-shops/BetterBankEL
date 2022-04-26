@@ -36,7 +36,6 @@ async function handler(req: any, res: any) {
     console.log(session);
     req.headers['Authorization'] = `Bearer ${session.accessToken}`;
   }
-  // TUTAJ IDZIE KOD DODAJĄCY CIASTKO
   await runMiddleware(req, res, proxy.get());
 }
 
