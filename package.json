@@ -60,6 +60,7 @@
     "whatwg-fetch": "^3.6.2"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.8.8",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.0.0",
     "@nestjs/core": "^8.0.0",
