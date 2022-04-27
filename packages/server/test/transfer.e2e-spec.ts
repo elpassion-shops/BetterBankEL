@@ -15,7 +15,6 @@ describe('transfer endpoint test', () => {
   }
 
   const mockTransfer: TransferDto = {
-    type: 'incoming',
     date: '2022-10-02',
     amount: 500,
     title: 'Dupa',
