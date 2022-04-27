@@ -1,5 +1,5 @@
 import { AccountGenerator } from '@bank-el/random-accnumber-generator';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Account } from '../database/entities/Account.entity';
@@ -26,9 +26,13 @@ export class AccountFacade {
   }
 
   async sendAccountDetails(req) {
-    return {
-      accountBalance: 15000,
-      accountNumber: '5919301262465077391297038',
-    };
+    try {
+      const account = await this.accountRepository.findOneOrFail({
+        email: req.user.email,
+      });
+      return account;
+    } catch (error) {
+      throw NotFoundException;
+    }
   }
 }
