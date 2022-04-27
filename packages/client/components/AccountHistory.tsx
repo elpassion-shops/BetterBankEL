@@ -68,7 +68,11 @@ export default function AccountHistory() {
                     .replace(/\//g, '.')}
                 </TableCell>
                 <TableCell type="td">{transfer.title}</TableCell>
-                <TableCell type="td">{transfer.fromOrToName}</TableCell>
+                <TableCell type="td">
+                  {transfer.type === 'outgoing'
+                    ? transfer.receiver
+                    : transfer.sender}
+                </TableCell>
                 <TableCell type="td" centered>
                   {transfer.amount.toFixed(2)} PLN
                 </TableCell>
