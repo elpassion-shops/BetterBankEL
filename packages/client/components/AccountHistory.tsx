@@ -56,10 +56,10 @@ export default function AccountHistory() {
                 className="bg-white dark:bg-gray-800 border-b"
               >
                 <TableCell type="td">
-                  {getTransferTypeIcon(transfer.type)}
+                  {getTransferTypeIcon('outgoing')}
                 </TableCell>
                 <TableCell type="td">
-                  {new Date(transfer.date)
+                  {new Date(transfer.createdAt)
                     .toLocaleString(undefined, {
                       year: 'numeric',
                       month: 'numeric',
