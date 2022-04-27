@@ -6,20 +6,18 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import { ITransfer } from '@bank-el/interfaces';
 
-export class TransferDto {
+export class TransferDto implements ITransfer {
   @IsNumber()
   @IsOptional()
   id?: number;
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   createdAt?: string;
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   updatedAt?: string;
-  @IsNotEmpty()
-  @IsString()
-  date: string;
   @IsNumber()
   @IsNotEmpty()
   amount: number;
