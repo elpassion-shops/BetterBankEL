@@ -1,21 +1,22 @@
 export interface ITransfer {
   id?: number;
-  type: 'outgoing' | 'incoming';
-  date: string;
+  createdAt?: string;
+  updatedAt?: string;
   amount: number;
   title: string;
   address?: string;
-  sender: string;
-  senderIBAN: string;
+  sender?: string;
+  senderIBAN?: string;
   receiver: string;
   receiverIBAN: string;
-  accountId?: string;
 }
 
 export interface IAccountDetails {
-  id?: string;
+  email?: string;
   accountBalance: number;
   accountNumber: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface ITransferHistory {
