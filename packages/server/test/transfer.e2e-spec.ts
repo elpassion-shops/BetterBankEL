@@ -15,13 +15,16 @@ describe('transfer endpoint test', () => {
   }
 
   const mockTransfer: TransferDto = {
-    accountId: 1,
-    amount: 500,
-    date: '2022-10-02',
-    fromOrToName: 'Dupa',
-    title: 'Dupa',
     type: 'incoming',
+    date: '2022-10-02',
+    amount: 500,
+    title: 'Dupa',
     address: 'bla bla',
+    sender: 'Janusz Januszowski',
+    senderIBAN: '52101010234569456978451234',
+    receiver: 'Bil Bilowalny',
+    receiverIBAN: '52101010234569456978451234',
+    accountId: 'okon@dupa.pl',
   };
 
   beforeAll(async () => {
