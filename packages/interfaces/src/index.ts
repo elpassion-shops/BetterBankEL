@@ -5,22 +5,17 @@ export interface ITransfer {
   amount: number;
   title: string;
   address?: string;
-  fromOrToName: string;
-  accountId: number;
+  sender: string;
+  senderIBAN: string;
+  receiver: string;
+  receiverIBAN: string;
+  accountId?: string;
 }
 
 export interface IAccountDetails {
-  id: number;
-  userId: number;
+  id?: string;
   accountBalance: number;
   accountNumber: string;
-}
-
-export interface IUser {
-  id?: number;
-  name: string;
-  password: string;
-  email: string;
 }
 
 export interface ITransferHistory {
