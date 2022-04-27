@@ -10,8 +10,7 @@ import * as Factory from 'factory.ts';
 
 export const TransferMock = Factory.Sync.makeFactory<ITransfer>({
   id: Factory.each(() => faker.datatype.number({ min: 0, max: 10000 })),
-  type: Factory.each(() => faker.random.arrayElement(['outgoing', 'incoming'])),
-  date: Factory.each(() => faker.date.past().toISOString()),
+  createdAt: Factory.each(() => faker.date.past().toISOString()),
   amount: Factory.each(() =>
     faker.datatype.number({ min: 10, max: 5000, precision: 0.01 })
   ),
