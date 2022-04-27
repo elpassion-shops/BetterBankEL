@@ -1,41 +1,46 @@
 import { ITransfer } from '@bank-el/interfaces';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Account } from './Account.entity';
 
 @Entity({ name: 'transfers' })
 export class Transfer implements ITransfer {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  createdAt: string;
-
-  @Column()
-  updatedAt: string;
-
-  @Column()
-  date: string;
-
-  @Column()
+  @Column({ nullable: false })
   amount: number;
 
-  @Column()
+  @Column({ nullable: false })
   title: string;
 
-  @Column()
+  @Column({ nullable: true })
   address: string;
 
   @Column()
   sender: string;
 
-  @Column()
+  @ManyToOne((type) => Account)
+  @JoinColumn({ referencedColumnName: 'accountBalance' })
   senderIBAN: string;
 
   @Column()
   receiver: string;
 
-  @Column()
+  @ManyToOne((type) => Account)
+  @JoinColumn({ referencedColumnName: 'accountBalance' })
   receiverIBAN: string;
 
-  @Column()
-  accountId: string;
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }
