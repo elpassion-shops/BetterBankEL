@@ -30,9 +30,6 @@ export default function Layout({ children }: LayoutProps) {
               <MenuLink href="/login">Login</MenuLink>
             </li>
             <li>
-              <MenuLink href="/SampleLoginForm">SampleLoginForm</MenuLink>
-            </li>
-            <li>
               <MenuLink href="/test">Test</MenuLink>
             </li>
           </ul>
