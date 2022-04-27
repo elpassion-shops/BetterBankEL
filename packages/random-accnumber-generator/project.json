@@ -1,0 +1,32 @@
+{
+  "root": "packages/random-accnumber-generator",
+  "sourceRoot": "packages/random-accnumber-generator/src",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/random-accnumber-generator",
+        "main": "packages/random-accnumber-generator/src/index.ts",
+        "tsConfig": "packages/random-accnumber-generator/tsconfig.lib.json",
+        "assets": ["packages/random-accnumber-generator/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/random-accnumber-generator/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/random-accnumber-generator"],
+      "options": {
+        "jestConfig": "packages/random-accnumber-generator/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

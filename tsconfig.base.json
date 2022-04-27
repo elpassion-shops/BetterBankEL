@@ -16,7 +16,10 @@
     "baseUrl": ".",
     "paths": {
       "@bank-el/dto-shared": ["packages/dto-shared/src/index.ts"],
-      "@bank-el/interfaces": ["packages/interfaces/src/index.ts"]
+      "@bank-el/interfaces": ["packages/interfaces/src/index.ts"],
+      "@bank-el/random-accnumber-generator": [
+        "packages/random-accnumber-generator/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
