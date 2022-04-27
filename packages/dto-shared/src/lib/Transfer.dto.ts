@@ -28,10 +28,19 @@ export class TransferDto {
   address?: string;
   @IsNotEmpty()
   @IsString()
-  fromOrToName: string;
+  sender: string;
   @IsNotEmpty()
-  @IsNumber()
-  accountId: number;
+  @IsString()
+  senderIBAN: string;
+  @IsNotEmpty()
+  @IsString()
+  receiver: string;
+  @IsNotEmpty()
+  @IsString()
+  receiverIBAN: string;
+  @IsOptional()
+  @IsString()
+  accountId?: string;
 }
 
 export class TransferHistoryDto {
@@ -53,8 +62,8 @@ export class SendTransferResponseDto {
   @IsBoolean()
   isCorrect: boolean;
   @IsNotEmpty()
-  @IsString()
-  transferID: string;
+  @IsNumber()
+  transferID: number;
   @IsNotEmpty()
   @IsNumber()
   accountBalance: number;
