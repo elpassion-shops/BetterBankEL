@@ -63,7 +63,7 @@ const getToken = (params: { nickname?: string }) => {
       sub: 'auth0|6267de5469f7db0070851652',
       aud: 'mBfMsUqSIzvnOkYwtT6I2fDAE6FlA851',
       iat: 1650975300,
-      exp: 1651011300,
+      exp: 1661011300,
     },
     JwtStrategyMock.SECRET_MOCK
   );
