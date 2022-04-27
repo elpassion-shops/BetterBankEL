@@ -41,7 +41,7 @@ export default function AccountHistory() {
                 Title
               </th>
               <th scope="col" className="px-6 py-3">
-                From or To
+                Receiver
               </th>
               <th scope="col" className="px-6 py-3 text-center">
                 Amount
