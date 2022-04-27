@@ -26,10 +26,10 @@ export function Account() {
           </ul>
         )}
 
+        <SendTransferForm />
+
         <AccountHistory />
       </Container>
-
-      {/*<SendTransferForm />*/}
     </>
   );
 }

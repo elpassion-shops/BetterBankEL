@@ -21,8 +21,7 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "client:build",
-        "dev": true,
-        "proxyConfig": "packages/client/proxy.conf.json"
+        "dev": true
       },
       "configurations": {
         "development": {
