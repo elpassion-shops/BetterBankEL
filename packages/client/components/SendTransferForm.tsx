@@ -31,8 +31,7 @@ export default function SendTransfer() {
     console.log(data);
 
     const transferData: ITransfer = {
-      type: 'outgoing',
-      date: (data.transferDate && data.transferDate.toString()) || '',
+      createdAt: (data.transferDate && data.transferDate.toString()) || '',
       amount: data.transferAmount,
       title: data.transferTitle,
       address: data.receiverAddress || '',
