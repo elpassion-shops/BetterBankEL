@@ -5,110 +5,32 @@ import {
   ITransferHistory,
 } from '@bank-el/interfaces';
 
+import { faker } from '@faker-js/faker';
+import * as Factory from 'factory.ts';
+
+export const TransferMock = Factory.Sync.makeFactory<ITransfer>({
+  id: Factory.each(() => faker.random.number({ min: 0, max: 10000 })),
+  type: Factory.each(() => faker.random.arrayElement(['outgoing', 'incoming'])),
+  date: Factory.each(() => faker.date.past().toISOString()),
+  amount: Factory.each(() =>
+    faker.random.number({ min: 10, max: 5000, precision: 0.01 })
+  ),
+  title: Factory.each(() => faker.lorem.sentence(5)),
+  sender: Factory.each(() => faker.name.findName(undefined, undefined)),
+  address: Factory.each(() => faker.address.streetAddress(true)),
+  senderIBAN: Factory.each(() => faker.finance.iban(true, 'PL').slice(2, -1)),
+  receiver: Factory.each(() => faker.name.findName(undefined, undefined)),
+  receiverIBAN: Factory.each(() => faker.finance.iban(true, 'PL').slice(2, -1)),
+});
+
+const mockTransfers: ITransferHistory = {
+  transfers: TransferMock.buildList(10),
+};
+console.log(mockTransfers);
+
 interface login {
   username: string;
 }
-
-const mockTransfers: ITransferHistory = {
-  transfers: [
-    {
-      id: 1,
-      type: 'outgoing',
-      date: '2020-04-23T14:48:00.000Z',
-      amount: 42.32,
-      title: 'lorem ipsum dipisem',
-      sender: 'John Doe',
-      address: 'Warsaw, Poland',
-      senderIBAN: '94109024023531497238419635',
-      receiver: 'Jane Black',
-      receiverIBAN: '38109024029344988151812884',
-    },
-    {
-      id: 2,
-      type: 'incoming',
-      date: '2020-04-20T14:48:00.000Z',
-      amount: 100.5,
-      title: 'lorem ipsum dipisem',
-      address: 'Poznań, Poland',
-      sender: 'John Doe',
-      senderIBAN: '94109024023531497238419635',
-      receiver: 'Jane Black',
-      receiverIBAN: '38109024029344988151812884',
-    },
-    {
-      id: 3,
-      type: 'incoming',
-      date: '2020-04-15T14:48:00.000Z',
-      amount: 200.84,
-      title: 'lorem ipsum dipisem',
-      address: 'Toruń, Poland',
-      sender: 'John Doe',
-      senderIBAN: '94109024023531497238419635',
-      receiver: 'Jane Black',
-      receiverIBAN: '38109024029344988151812884',
-    },
-    {
-      id: 4,
-      type: 'incoming',
-      date: '2020-04-10T14:48:00.000Z',
-      amount: 300.09,
-      title: 'lorem ipsum dipisem',
-      address: 'Warsaw, Poland',
-      sender: 'John Doe',
-      senderIBAN: '94109024023531497238419635',
-      receiver: 'Jane Black',
-      receiverIBAN: '38109024029344988151812884',
-    },
-    {
-      id: 5,
-      type: 'outgoing',
-      date: '2020-04-07T14:48:00.000Z',
-      amount: 400.1,
-      title: 'lorem ipsum dipisem',
-      address: 'Warsaw, Poland',
-      sender: 'John Doe',
-      senderIBAN: '94109024023531497238419635',
-      receiver: 'Jane Black',
-      receiverIBAN: '38109024029344988151812884',
-    },
-    {
-      id: 6,
-      type: 'outgoing',
-      date: '2020-03-24T14:48:00.000Z',
-      amount: 500.0,
-      title: 'lorem ipsum dipisem',
-      address: 'Warsaw, Poland',
-      sender: 'John Doe',
-      senderIBAN: '94109024023531497238419635',
-      receiver: 'Jane Black',
-      receiverIBAN: '38109024029344988151812884',
-    },
-    {
-      id: 7,
-      type: 'outgoing',
-      date: '2020-03-17T14:48:00.000Z',
-      amount: 600.99,
-      title: 'lorem ipsum dipisem',
-      address: 'Warsaw, Poland',
-      sender: 'John Doe',
-      senderIBAN: '94109024023531497238419635',
-      receiver: 'Jane Black',
-      receiverIBAN: '38109024029344988151812884',
-    },
-    {
-      id: 8,
-      type: 'outgoing',
-      date: '2020-06-12T14:48:00.000Z',
-      amount: 700.44,
-      title: 'lorem ipsum dipisem',
-      address: 'Warsaw, Poland',
-      sender: 'John Doe',
-      senderIBAN: '94109024023531497238419635',
-      receiver: 'Jane Black',
-      receiverIBAN: '38109024029344988151812884',
-    },
-  ],
-};
 
 export const handlers = [
   rest.get(
@@ -155,20 +77,4 @@ export const handlers = [
       })
     );
   }),
-
-  rest.post<login>(
-    `${process.env.NEXT_PUBLIC_SERVER}/login`,
-    (req, res, ctx) => {
-      const { username } = req.body;
-
-      return res(
-        ctx.json({
-          id: 'f79e82e8-c34a-4dc7-a49e-9fadc0979fda',
-          username,
-          firstName: 'John',
-          lastName: 'Maverick',
-        })
-      );
-    }
-  ),
 ];
