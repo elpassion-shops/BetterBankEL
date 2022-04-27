@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { TransferService } from './transfer.service';
 import { TransferDto } from '@bank-el/dto-shared';
 
-@Controller('transfer')
+@Controller('transfers')
 export class TransferController {
   constructor(private readonly transferService: TransferService) {}
 
@@ -11,7 +11,7 @@ export class TransferController {
     return await this.transferService.getAllTransfers();
   }
 
-  @Post('/new')
+  @Post('/')
   async makeNewTransfer(@Body() body: TransferDto) {
     return await this.transferService.makeNewTransfer(body);
   }
