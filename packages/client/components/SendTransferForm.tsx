@@ -17,7 +17,7 @@ export interface ITransferFormData {
 export default function SendTransfer() {
   const { BankAppAPI } = useContext(BankAppApiContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [sendTranferResponse, setSendTranferResponse] =
+  const [sendTranferResponse, setSendTransferResponse] =
     useState<ISendTransferResponse | null>(null);
 
   const {
@@ -36,12 +36,14 @@ export default function SendTransfer() {
       amount: data.transferAmount,
       title: data.transferTitle,
       address: data.receiverAddress || '',
-      fromOrToName: data.recipientName,
-      accountId: 1,
+      sender: '',
+      senderIBAN: data.senderBankAccountNumber,
+      receiver: '',
+      receiverIBAN: data.receiverBankAccountNumber,
     };
 
     BankAppAPI.sendTransfer(transferData).then((data) => {
-      setSendTranferResponse(data);
+      setSendTransferResponse(data);
     });
 
     reset();
