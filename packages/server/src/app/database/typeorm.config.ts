@@ -1,6 +1,5 @@
 import { Account } from './entities/Account.entity';
 import { Transfer } from './entities/Transfer.entity';
-import { User } from './entities/User.entity';
 import { AccTransUserCreate1650906409425 } from './migrations/1650906409425-Acc_Trans_User_Create';
 
 module.exports = [
@@ -16,7 +15,7 @@ module.exports = [
 
     autoLoadEntities: true,
 
-    entities: [User, Transfer, Account], //TODO: Add entities
+    entities: [Transfer, Account], //TODO: Add entities
     migrationsTableName: 'migrations',
     migrations: [AccTransUserCreate1650906409425],
     cli: {
@@ -41,7 +40,7 @@ module.exports = [
 
     autoLoadEntities: true,
 
-    entities: [User, Transfer, Account], //TODO: Add entities
+    entities: [Transfer, Account], //TODO: Add entities
     migrationsTableName: 'migrations',
     migrations: ['dist/**/migrations/*.js'],
     cli: {
