@@ -24,6 +24,9 @@ export default NextAuth({
       session.accessToken = token.accessToken;
       return session;
     },
+    async redirect({ url, baseUrl }) {
+      return '/account';
+    },
   },
   secret: process.env.AUTH0_CLIENT_SECRET,
 });
