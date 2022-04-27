@@ -24,6 +24,11 @@ export default NextAuth({
       session.accessToken = token.accessToken;
       return session;
     },
+    async redirect({ url, baseUrl }) {
+      console.log('url', url);
+      console.log('baseUrl', baseUrl);
+      return '/account';
+    },
   },
   secret: process.env.AUTH0_CLIENT_SECRET,
 });

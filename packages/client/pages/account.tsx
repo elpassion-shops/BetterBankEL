@@ -4,6 +4,7 @@ import Container from '../components/Container';
 import SendTransferForm from '../components/SendTransferForm';
 import AccountHistory from '../components/AccountHistory';
 import { BankAppAPI } from '../helpers/BankAPI';
+import withAuth from '../hoc/withAuth';
 
 export function Account() {
   const [userAccount, setAccountData] = useState<IAccountDetails | null>(null);
@@ -33,5 +34,7 @@ export function Account() {
     </>
   );
 }
+
+export const getServerSideProps = withAuth('/login')();
 
 export default Account;
