@@ -1,12 +1,16 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class AccountDetailsDto {
-  @IsNumber()
+  @IsEmail()
   @IsNotEmpty()
-  id: number;
-  @IsNumber()
-  @IsNotEmpty()
-  userId: number;
+  @IsOptional()
+  id: string;
   @IsNumber()
   @IsNotEmpty()
   accountBalance: number;
