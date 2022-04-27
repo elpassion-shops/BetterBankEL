@@ -7,23 +7,32 @@ export class Transfer implements ITransfer {
   id: number;
 
   @Column()
-  accountId: number;
-
-  @Column()
   type: 'outgoing' | 'incoming';
-
-  @Column()
-  amount: number;
-
-  @Column()
-  fromOrToName: string;
-
-  @Column()
-  address: string;
 
   @Column()
   date: string;
 
   @Column()
+  amount: number;
+
+  @Column()
   title: string;
+
+  @Column()
+  address: string;
+
+  @Column()
+  sender: string;
+
+  @Column()
+  senderIBAN: string;
+
+  @Column()
+  receiver: string;
+
+  @Column()
+  receiverIBAN: string;
+
+  @Column()
+  accountId: string;
 }
