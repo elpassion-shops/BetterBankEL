@@ -1,6 +1,7 @@
 import { Account } from './entities/Account.entity';
 import { Transfer } from './entities/Transfer.entity';
-import { AccTransUserCreate1650906409425 } from './migrations/1650906409425-Acc_Trans_User_Create';
+import { createAccount1651066915218 } from './migrations/1651066915218-create_account';
+import { createTransfer1651067459813 } from './migrations/1651067459813-create_transfer';
 
 module.exports = [
   {
@@ -17,7 +18,7 @@ module.exports = [
 
     entities: [Transfer, Account], //TODO: Add entities
     migrationsTableName: 'migrations',
-    migrations: [AccTransUserCreate1650906409425],
+    migrations: [createAccount1651066915218, createTransfer1651067459813],
     cli: {
       migrationsDir: './packages/server',
     },
@@ -42,7 +43,7 @@ module.exports = [
 
     entities: [Transfer, Account], //TODO: Add entities
     migrationsTableName: 'migrations',
-    migrations: ['dist/**/migrations/*.js'],
+    migrations: [createAccount1651066915218, createTransfer1651067459813],
     cli: {
       migrationsDir: './src/database/migrations',
     },

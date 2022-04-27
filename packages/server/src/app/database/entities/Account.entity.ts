@@ -1,22 +1,26 @@
 import { IAccountDetails } from '@bank-el/interfaces';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'accounts' })
 export class Account implements IAccountDetails {
-  @PrimaryGeneratedColumn()
+  @Column({ unique: true, nullable: false })
   email: string;
-  @Column()
-  userId: number;
 
-  @Column()
+  @Column({ type: 'money', nullable: false })
   accountBalance: number;
 
-  @Column()
+  @PrimaryColumn()
   accountNumber: string;
 
-  @Column()
-  createdAt: string;
+  @CreateDateColumn()
+  created_at: Date;
 
-  @Column()
-  updatedAt: string;
+  @UpdateDateColumn()
+  updated_at: Date;
 }
