@@ -11,9 +11,12 @@ export class TransferDto {
   @IsNumber()
   @IsOptional()
   id?: number;
-  @IsString()
   @IsNotEmpty()
-  type: 'outgoing' | 'incoming';
+  @IsString()
+  createdAt?: string;
+  @IsNotEmpty()
+  @IsString()
+  updatedAt?: string;
   @IsNotEmpty()
   @IsString()
   date: string;
