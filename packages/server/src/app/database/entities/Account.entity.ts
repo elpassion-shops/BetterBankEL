@@ -4,7 +4,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity({ name: 'accounts' })
 export class Account implements IAccountDetails {
   @PrimaryGeneratedColumn()
-  id: string;
+  email: string;
   @Column()
   userId: number;
 
@@ -13,4 +13,10 @@ export class Account implements IAccountDetails {
 
   @Column()
   accountNumber: string;
+
+  @Column()
+  createdAt: string;
+
+  @Column()
+  updatedAt: string;
 }

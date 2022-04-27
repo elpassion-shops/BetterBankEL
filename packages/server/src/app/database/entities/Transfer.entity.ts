@@ -7,7 +7,10 @@ export class Transfer implements ITransfer {
   id: number;
 
   @Column()
-  type: 'outgoing' | 'incoming';
+  createdAt: string;
+
+  @Column()
+  updatedAt: string;
 
   @Column()
   date: string;

@@ -9,11 +9,17 @@ import {
 export class AccountDetailsDto {
   @IsEmail()
   @IsOptional()
-  id?: string;
+  email?: string;
   @IsNumber()
   @IsNotEmpty()
   accountBalance: number;
   @IsString()
   @IsNotEmpty()
   accountNumber: string;
+  @IsString()
+  @IsNotEmpty()
+  createdAt?: string;
+  @IsString()
+  @IsNotEmpty()
+  updatedAt?: string;
 }
