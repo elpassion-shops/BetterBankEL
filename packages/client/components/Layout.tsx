@@ -2,12 +2,15 @@ import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import Container from '../components/Container';
 import config from '../config';
+import { useSession } from 'next-auth/react';
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 export default function Layout({ children }: LayoutProps) {
+  const { status } = useSession();
+
   return (
     <>
       <header>
@@ -18,9 +21,11 @@ export default function Layout({ children }: LayoutProps) {
             <li>
               <MenuLink href="/">Home</MenuLink>
             </li>
-            <li>
-              <MenuLink href="/account">Account Details</MenuLink>
-            </li>
+            {status == 'authenticated' && (
+              <li>
+                <MenuLink href="/account">Account Details</MenuLink>
+              </li>
+            )}
             <li>
               <MenuLink href="/login">Login</MenuLink>
             </li>
