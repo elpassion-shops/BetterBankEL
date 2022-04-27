@@ -1,10 +1,13 @@
-import { Controller, Get, Request, Response } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { LoginService } from './login.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('login')
 export class LoginController {
+  constructor(private readonly loginService: LoginService) {}
+  @UseGuards(JwtAuthGuard)
   @Get('/')
-  async login(@Request() req, @Response({ passthrough: true }) res) {
-    await res.cookie('isDupa', 'yesItIS');
-    return { status: 200, msg: 'ok' };
+  async login(@Req() req) {
+    return this.loginService.login(req);
   }
 }

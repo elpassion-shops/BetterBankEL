@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 import { AccountModule } from './account/account.module';
 import { DatabaseModule } from './database/database.module';
 import { LoginModule } from '../login/login.module';
-import { MeModule } from '../me/me.module';
+import { TransferModule } from './transfer/transfer.module';
 
 @Module({
   imports: [
@@ -20,8 +20,8 @@ import { MeModule } from '../me/me.module';
     }),
     AccountModule,
     LoginModule,
-    MeModule,
     DatabaseModule,
+    TransferModule,
   ],
   controllers: [AppController],
   providers: [AppService],

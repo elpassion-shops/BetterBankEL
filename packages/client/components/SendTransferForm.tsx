@@ -1,5 +1,5 @@
 import { ISendTransferResponse, ITransfer } from '@bank-el/interfaces';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import 'tailwindcss/tailwind.css';
 import { BankAppApiContext } from '../pages/dashboard';
@@ -37,8 +37,10 @@ export default function SendTransfer() {
       amount: data.transferAmount,
       title: data.transferTitle,
       address: data.receiverAddress || '',
-      fromOrToName: data.recipientName,
-      accountId: 1,
+      sender: '',
+      senderIBAN: data.senderBankAccountNumber,
+      receiver: '',
+      receiverIBAN: data.receiverBankAccountNumber,
     };
 
     BankAppAPI.sendTransfer(transferData).then((newTransferData) => {

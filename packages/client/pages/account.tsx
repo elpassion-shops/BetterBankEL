@@ -1,23 +1,22 @@
 import { IAccountDetails } from '@bank-el/interfaces';
 import { useEffect, useState } from 'react';
+import Container from '../components/Container';
 import SendTransferForm from '../components/SendTransferForm';
+import AccountHistory from '../components/AccountHistory';
 import { BankAppAPI } from '../helpers/BankAPI';
 
 export function Account() {
   const [userAccount, setAccountData] = useState<IAccountDetails | null>(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      // ! delay set to give time for msw to turn on ([MSW] Mocking enabled.)
-      BankAppAPI.getAccountDetails().then((data) => {
-        setAccountData(data);
-      });
-    }, 500);
+    BankAppAPI.getAccountDetails().then((data) => {
+      setAccountData(data);
+    });
   }, []);
 
   return (
     <>
-      <div className="container mx-auto px-4">
+      <Container>
         <h1 className="text-3xl font-bold underline">Account</h1>
 
         {userAccount && (
@@ -26,9 +25,11 @@ export function Account() {
             <li>Account balance: {userAccount.accountBalance}</li>
           </ul>
         )}
-      </div>
 
-      <SendTransferForm />
+        <SendTransferForm />
+
+        <AccountHistory />
+      </Container>
     </>
   );
 }

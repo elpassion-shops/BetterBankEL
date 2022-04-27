@@ -13,7 +13,7 @@ export class MockDataBase {
     return this.accountDetails;
   }
 
-  addTransferToList(mockTransfer: ITransfer, id) {
+  addTransferToList(mockTransfer: ITransfer, id: number) {
     this.transfers.push({ id, ...mockTransfer });
   }
 

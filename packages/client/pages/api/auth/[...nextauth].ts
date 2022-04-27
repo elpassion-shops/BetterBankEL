@@ -1,29 +1,29 @@
 import NextAuth from 'next-auth';
-import AppleProvider from 'next-auth/providers/apple';
-import GoogleProvider from 'next-auth/providers/google';
-import EmailProvider from 'next-auth/providers/email';
+import Auth0Provider from 'next-auth/providers/auth0';
 
 export default NextAuth({
-  callbacks: {
-    session({ session, token, user }) {
-      return session; // The return type will match the one returned in `useSession()`
-    },
-  },
-  secret: process.env.SECRET,
   providers: [
-    // OAuth authentication providers
-    AppleProvider({
-      clientId: process.env.APPLE_ID,
-      clientSecret: process.env.APPLE_SECRET,
-    }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
-    }),
-    // Sign in with passwordless email link
-    EmailProvider({
-      server: process.env.MAIL_SERVER,
-      from: '<no-reply@example.com>',
+    Auth0Provider({
+      clientId: process.env.AUTH0_CLIENT_ID,
+      clientSecret: process.env.AUTH0_CLIENT_SECRET,
+      issuer: process.env.AUTH0_ISSUER,
     }),
   ],
+  callbacks: {
+    async jwt({ token, account }) {
+      console.log(account);
+      // Persist the OAuth access_token to the token right after signin
+      if (account) {
+        token.accessToken = account.id_token;
+      }
+      return token;
+    },
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token from a provider.
+      // console.log(session, token);
+      session.accessToken = token.accessToken;
+      return session;
+    },
+  },
+  secret: process.env.AUTH0_CLIENT_SECRET,
 });

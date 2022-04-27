@@ -5,7 +5,8 @@ import '../styles/tailwind.css';
 import { SessionProvider } from 'next-auth/react';
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
-  import('../mocks').then(({ setupMocks }) => setupMocks());
+  const { setupMocks } = require('../mocks');
+  setupMocks();
 }
 
 function CustomApp({
