@@ -9,11 +9,11 @@ import { faker } from '@faker-js/faker';
 import * as Factory from 'factory.ts';
 
 export const TransferMock = Factory.Sync.makeFactory<ITransfer>({
-  id: Factory.each(() => faker.random.number({ min: 0, max: 10000 })),
+  id: Factory.each(() => faker.datatype.number({ min: 0, max: 10000 })),
   type: Factory.each(() => faker.random.arrayElement(['outgoing', 'incoming'])),
   date: Factory.each(() => faker.date.past().toISOString()),
   amount: Factory.each(() =>
-    faker.random.number({ min: 10, max: 5000, precision: 0.01 })
+    faker.datatype.number({ min: 10, max: 5000, precision: 0.01 })
   ),
   title: Factory.each(() => faker.lorem.sentence(5)),
   sender: Factory.each(() => faker.name.findName(undefined, undefined)),
@@ -26,11 +26,6 @@ export const TransferMock = Factory.Sync.makeFactory<ITransfer>({
 const mockTransfers: ITransferHistory = {
   transfers: TransferMock.buildList(10),
 };
-console.log(mockTransfers);
-
-interface login {
-  username: string;
-}
 
 export const handlers = [
   rest.get(
@@ -66,15 +61,4 @@ export const handlers = [
       return res(ctx.json(sendTransferResponse));
     }
   ),
-
-  rest.get('https://my.backend/book', (_req, res, ctx) => {
-    return res(
-      ctx.json({
-        title: 'Lord of the Rings',
-        imageUrl: '/book-cover.jpg',
-        description:
-          'The Lord of the Rings is an epic high-fantasy novel written by English author and scholar J. R. R. Tolkien.',
-      })
-    );
-  }),
 ];
