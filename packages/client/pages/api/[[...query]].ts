@@ -33,7 +33,6 @@ const proxy = new Proxy();
 async function handler(req: any, res: any) {
   const session = await getSession({ req });
   if (session) {
-    console.log(session);
     req.headers['Authorization'] = `Bearer ${session.accessToken}`;
   }
   await runMiddleware(req, res, proxy.get());
