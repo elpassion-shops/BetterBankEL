@@ -54,7 +54,7 @@ export default function SendTransfer() {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col overflow-hidden relative z-0 "
       >
-        <div className="relative z-0 outline w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+        <div className="relative z-0 outline outline-transparent w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
           <input
             type="text"
             name="recipientName"
@@ -71,7 +71,7 @@ export default function SendTransfer() {
           </label>
         </div>
 
-        <div className="relative z-0 outline w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+        <div className="relative z-0 outline outline-transparent w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
           <input
             type="number"
             name="senderBankAccountNumber"
@@ -88,7 +88,7 @@ export default function SendTransfer() {
           </label>
         </div>
 
-        <div className="relative z-0 outline w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+        <div className="relative z-0 outline outline-transparent w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
           <input
             type="text"
             name="receiverAddress"
@@ -105,7 +105,7 @@ export default function SendTransfer() {
           </label>
         </div>
 
-        <div className="relative z-0 outline w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+        <div className="relative z-0 outline outline-transparent w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
           <input
             type="text"
             name="receiverBankAccountNumber"
@@ -122,7 +122,7 @@ export default function SendTransfer() {
           </label>
         </div>
 
-        <div className="relative z-0 outline w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+        <div className="relative z-0 outline outline-transparent w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
           <input
             type="date"
             name="transferDate"
@@ -139,7 +139,7 @@ export default function SendTransfer() {
           </label>
         </div>
 
-        <div className="relative z-0 outline w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+        <div className="relative z-0 outline outline-transparent w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
           <input
             type="text"
             name="transferTitle"
@@ -156,7 +156,7 @@ export default function SendTransfer() {
           </label>
         </div>
 
-        <div className="relative z-0 outline w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+        <div className="relative z-0 outline outline-transparent w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
           <input
             type="number"
             name="transferAmount"
