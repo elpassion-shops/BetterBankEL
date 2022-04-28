@@ -3,12 +3,9 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Account } from './Account.entity';
 
 @Entity({ name: 'transfers' })
 export class Transfer implements ITransfer {
@@ -27,15 +24,13 @@ export class Transfer implements ITransfer {
   @Column()
   sender: string;
 
-  @ManyToOne((type) => Account)
-  @JoinColumn({ referencedColumnName: 'accountNumber', name: 'senderIBAN' })
+  @Column()
   senderIBAN: string;
 
   @Column()
   receiver: string;
 
-  @ManyToOne((type) => Account)
-  @JoinColumn({ referencedColumnName: 'accountNumber', name: 'receiverIBAN' })
+  @Column()
   receiverIBAN: string;
 
   @CreateDateColumn()
