@@ -28,14 +28,14 @@ export class Transfer implements ITransfer {
   sender: string;
 
   @ManyToOne((type) => Account)
-  @JoinColumn({ referencedColumnName: 'accountBalance' })
+  @JoinColumn({ referencedColumnName: 'accountNumber', name: 'senderIBAN' })
   senderIBAN: string;
 
   @Column()
   receiver: string;
 
   @ManyToOne((type) => Account)
-  @JoinColumn({ referencedColumnName: 'accountBalance' })
+  @JoinColumn({ referencedColumnName: 'accountNumber', name: 'receiverIBAN' })
   receiverIBAN: string;
 
   @CreateDateColumn()
