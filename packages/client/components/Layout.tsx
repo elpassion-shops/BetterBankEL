@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import Container from '../components/Container';
-import config from '../config';
 import { useSession } from 'next-auth/react';
 
 interface LayoutProps {
@@ -15,7 +14,7 @@ export default function Layout({ children }: LayoutProps) {
     <>
       <header>
         <Container>
-          <h1 className="text-3xl font-bold underline">{config.appName}</h1>
+          <img src="/logo.png" width={300} height={300} className="mx-auto" />
 
           <ul className="flex space-x-6">
             <li>
