@@ -1,10 +1,12 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 import { ITransfer } from '@bank-el/interfaces';
 import { FaCreditCard, FaRegCreditCard } from 'react-icons/fa';
 import Loader from '../components/Loader';
 import { BankAppAPI } from '../helpers/BankAPI';
+import { AccountContext } from '../pages/account';
 
 export default function AccountHistory() {
+  const account = useContext(AccountContext);
   const [accountHistory, setAccountHistory] = useState<Array<ITransfer>>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -72,7 +74,12 @@ export default function AccountHistory() {
                   className="bg-white dark:bg-gray-800 border-b"
                 >
                   <TableCell type="td">
-                    {getTransferTypeIcon('outgoing')}
+                    {getTransferTypeIcon(
+                      isTransferOutgoingOrIncoming(
+                        account.accountNumber,
+                        transfer.senderIBAN
+                      )
+                    )}
                   </TableCell>
                   <TableCell type="td">
                     {new Date(transfer.createdAt)
@@ -99,10 +106,18 @@ export default function AccountHistory() {
 
 function getTransferTypeIcon(transferType: 'outgoing' | 'incoming') {
   if (transferType === 'outgoing') {
-    return <FaCreditCard title="outgoing" />;
+    return <FaCreditCard title="outgoing" color="blue" />;
   } else {
-    return <FaRegCreditCard title="incoming" />;
+    return <FaRegCreditCard title="incoming" color="green" />;
   }
+}
+
+function isTransferOutgoingOrIncoming(accountIBAN: string, senderIBAN: string) {
+  if (accountIBAN === senderIBAN) {
+    return 'outgoing';
+  }
+
+  return 'incoming';
 }
 
 function TableCell({

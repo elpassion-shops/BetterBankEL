@@ -26,6 +26,9 @@ const mockTransfers: ITransferHistory = {
   transfers: TransferMock.buildList(10),
 };
 
+mockTransfers.transfers[0].senderIBAN = '61109010140000071219812874';
+mockTransfers.transfers[4].senderIBAN = '61109010140000071219812874';
+
 export const handlers = [
   rest.get(
     `${process.env.NEXT_PUBLIC_SERVER}/api/account`,
