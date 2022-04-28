@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Account } from '../app/database/entities/Account.entity';
@@ -13,15 +13,15 @@ export class LoginService {
 
   async login(req): Promise<AccountDetailsDto | { status: number; err }> {
     try {
-      const user = await this.accountRepository.findOne({
-        email: req.user.login,
+      const account = await this.accountRepository.findOneOrFail({
+        email: req.user.email,
       });
       return {
-        accountBalance: user.accountBalance,
-        accountNumber: user.accountNumber,
+        accountBalance: account.accountBalance,
+        accountNumber: account.accountNumber,
       };
-    } catch (err) {
-      return { status: 500, err };
+    } catch (error) {
+      throw NotFoundException;
     }
   }
 }
