@@ -1,10 +1,16 @@
-import { ISendTransferResponse, ITransfer } from '@bank-el/interfaces';
+import {
+  IAccountDetails,
+  ISendTransferResponse,
+  ITransfer,
+  ITransferSendFormData,
+} from '@bank-el/interfaces';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BankAppApiContext } from '../providers/BankAppApiContext';
 import Modal from './Modal';
 import { SendTransferValidation } from '../helpers/SendTransferValidation';
+import { AccountContext } from '../pages/account';
 
 export default function SendTransfer() {
   const { BankAppAPI } = useContext(BankAppApiContext);
@@ -21,7 +27,9 @@ export default function SendTransfer() {
     resolver: classValidatorResolver(SendTransferValidation),
   });
 
-  const onSubmit = (data: ITransferFormData) => {
+  const userAccount = useContext(AccountContext) as IAccountDetails;
+
+  const onSubmit = (data: ITransferSendFormData) => {
     console.log(data);
 
     const transferData: ITransfer = {
