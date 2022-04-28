@@ -8,7 +8,7 @@ import { staticImplements } from './staticImplements';
 
 @staticImplements<IBankAppAPI>()
 export class BankAppAPI {
-  static serverUrl = `${process.env.NEXT_PUBLIC_SERVER}/api`;
+  static serverUrl = `${process.env.NEXT_PUBLIC_CLIENT}/api`;
 
   static postJson(url: string, method: string, data: IJSONData) {
     return fetch(url, {
