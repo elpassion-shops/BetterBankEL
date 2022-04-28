@@ -13,12 +13,14 @@ export default function AccountHistory() {
 
   useEffect(() => {
     BankAppAPI.getTransfersHistory().then((data) => {
-      setAccountHistory(data.transfers);
+      setAccountHistory(data);
       setIsLoading(false);
 
-      if (data && data.message) {
-        setIsError(true);
-      }
+      console.log(data);
+
+      // if (data && data.message) {
+      //   setIsError(true);
+      // }
     });
   }, []);
 
@@ -66,37 +68,35 @@ export default function AccountHistory() {
           </thead>
 
           <tbody>
-            {accountHistory &&
-              accountHistory.length &&
-              accountHistory.map((transfer) => (
-                <tr
-                  key={transfer.id}
-                  className="bg-white dark:bg-gray-800 border-b"
-                >
-                  <TableCell type="td">
-                    {getTransferTypeIcon(
-                      isTransferOutgoingOrIncoming(
-                        account.accountNumber,
-                        transfer.senderIBAN
-                      )
-                    )}
-                  </TableCell>
-                  <TableCell type="td">
-                    {new Date(transfer.createdAt)
-                      .toLocaleString(undefined, {
-                        year: 'numeric',
-                        month: 'numeric',
-                        day: 'numeric',
-                      })
-                      .replace(/\//g, '.')}
-                  </TableCell>
-                  <TableCell type="td">{transfer.title}</TableCell>
-                  <TableCell type="td">{transfer.receiver}</TableCell>
-                  <TableCell type="td" centered>
-                    {transfer.amount.toFixed(2)} PLN
-                  </TableCell>
-                </tr>
-              ))}
+            {accountHistory.map((transfer) => (
+              <tr
+                key={transfer.id}
+                className="bg-white dark:bg-gray-800 border-b"
+              >
+                <TableCell type="td">
+                  {getTransferTypeIcon(
+                    isTransferOutgoingOrIncoming(
+                      account.accountNumber,
+                      transfer.senderIBAN
+                    )
+                  )}
+                </TableCell>
+                <TableCell type="td">
+                  {new Date(transfer.created_at)
+                    .toLocaleString(undefined, {
+                      year: 'numeric',
+                      month: 'numeric',
+                      day: 'numeric',
+                    })
+                    .replace(/\//g, '.')}
+                </TableCell>
+                <TableCell type="td">{transfer.title}</TableCell>
+                <TableCell type="td">{transfer.receiver}</TableCell>
+                <TableCell type="td" centered>
+                  {transfer.amount.toFixed(2)} PLN
+                </TableCell>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

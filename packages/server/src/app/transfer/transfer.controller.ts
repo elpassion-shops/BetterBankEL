@@ -16,8 +16,8 @@ export class TransferController {
   @Post('/new')
   @UseGuards(JwtAuthGuard)
   async makeNewTransfer(@Body() body: TransferDto, @Req() req) {
-    console.log(body);
-    console.log(req);
-    return await this.transferService.makeNewTransfer(req, body);
+    // console.log(body);
+    // console.log(req);
+    return await this.transferService.makeNewTransfer(body, req);
   }
 }
