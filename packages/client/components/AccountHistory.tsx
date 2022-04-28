@@ -7,11 +7,16 @@ import { BankAppAPI } from '../helpers/BankAPI';
 export default function AccountHistory() {
   const [accountHistory, setAccountHistory] = useState<Array<ITransfer>>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     BankAppAPI.getTransfersHistory().then((data) => {
       setAccountHistory(data.transfers);
       setIsLoading(false);
+
+      if (data && data.message) {
+        setIsError(true);
+      }
     });
   }, []);
 
@@ -19,6 +24,15 @@ export default function AccountHistory() {
     return (
       <>
         <Loader />
+      </>
+    );
+  }
+
+  if (isError) {
+    return (
+      <>
+        <h1 className="text-xl font-bold">Transaction history</h1>
+        <p>Failed to fetch data from database.</p>
       </>
     );
   }
@@ -50,30 +64,32 @@ export default function AccountHistory() {
           </thead>
 
           <tbody>
-            {accountHistory.map((transfer) => (
-              <tr
-                key={transfer.id}
-                className="bg-white dark:bg-gray-800 border-b"
-              >
-                <TableCell type="td">
-                  {getTransferTypeIcon('outgoing')}
-                </TableCell>
-                <TableCell type="td">
-                  {new Date(transfer.createdAt)
-                    .toLocaleString(undefined, {
-                      year: 'numeric',
-                      month: 'numeric',
-                      day: 'numeric',
-                    })
-                    .replace(/\//g, '.')}
-                </TableCell>
-                <TableCell type="td">{transfer.title}</TableCell>
-                <TableCell type="td">{transfer.receiver}</TableCell>
-                <TableCell type="td" centered>
-                  {transfer.amount.toFixed(2)} PLN
-                </TableCell>
-              </tr>
-            ))}
+            {accountHistory &&
+              accountHistory.length &&
+              accountHistory.map((transfer) => (
+                <tr
+                  key={transfer.id}
+                  className="bg-white dark:bg-gray-800 border-b"
+                >
+                  <TableCell type="td">
+                    {getTransferTypeIcon('outgoing')}
+                  </TableCell>
+                  <TableCell type="td">
+                    {new Date(transfer.createdAt)
+                      .toLocaleString(undefined, {
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                      })
+                      .replace(/\//g, '.')}
+                  </TableCell>
+                  <TableCell type="td">{transfer.title}</TableCell>
+                  <TableCell type="td">{transfer.receiver}</TableCell>
+                  <TableCell type="td" centered>
+                    {transfer.amount.toFixed(2)} PLN
+                  </TableCell>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
