@@ -53,11 +53,13 @@ export class TransferService {
       receiver: body.receiver,
       receiverIBAN: body.receiverIBAN,
     });
+    user.accountBalance = ammountFromAccount - body.amount;
+    await this.accountRepository.save(user);
     const result = await this.transferRepository.save(newTransfer);
     return {
       isCorrect: true,
       transferID: result.id,
-      accountBalance: user.accountBalance - body.amount,
+      accountBalance: user.accountBalance,
       message: 'Przelew wykonano',
     };
   }
