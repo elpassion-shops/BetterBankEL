@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Transfer } from '../database/entities/Transfer.entity';
-import { TransferDto } from '@bank-el/dto-shared';
+import { SendTransferResponseDto, TransferDto } from '@bank-el/dto-shared';
 import { Account } from '../database/entities/Account.entity';
 
 @Injectable()
@@ -20,8 +20,6 @@ export class TransferService {
       where: { email: email },
     });
 
-    console.log(account);
-
     return await this.transferRepository.find({
       where: [
         { senderIBAN: account.accountNumber },
@@ -30,12 +28,42 @@ export class TransferService {
     });
   }
 
-  async makeNewTransfer(body: TransferDto) {
-    try {
-      const newTransfer = await this.transferRepository.create({ ...body });
-      return this.transferRepository.save(newTransfer);
-    } catch (error) {
-      throw error;
-    }
+  async makeNewTransfer(
+    body: TransferDto,
+    req
+  ): Promise<SendTransferResponseDto | { status: number; msg: string }> {
+    console.log(req);
+    const email = req.user.email;
+    console.log(email);
+    const user = await this.accountRepository.findOneOrFail({
+      where: { email: email },
+    });
+    const ammountFromAccount = Number(
+      user.accountBalance.toString().slice(1).replace(',', '')
+    );
+
+    if (ammountFromAccount < body.amount)
+      return { status: 400, msg: 'Nie masz tyle hajsu' };
+    if (user.accountNumber === body.receiverIBAN)
+      return { status: 400, msg: 'Do siebie nie wyślesz :)' };
+    const newTransfer = this.transferRepository.create({
+      amount: body.amount,
+      title: body.title,
+      address: body.address,
+      sender: 'dupa',
+      senderIBAN: user.accountNumber,
+      receiver: body.receiver,
+      receiverIBAN: body.receiverIBAN,
+    });
+    console.log('test');
+    user.accountBalance = ammountFromAccount - body.amount;
+    await this.accountRepository.save(user);
+    const result = await this.transferRepository.save(newTransfer);
+    return {
+      isCorrect: true,
+      transferID: result.id,
+      accountBalance: user.accountBalance,
+      message: 'Przelew wykonano',
+    };
   }
 }

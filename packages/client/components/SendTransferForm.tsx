@@ -37,6 +37,7 @@ export default function SendTransfer() {
       amount: data.transferAmount,
       title: data.transferTitle,
       address: data.receiverAddress || '',
+      sender: 'asd',
       senderIBAN: userAccount.accountNumber,
       receiver: data.receiverName,
       receiverIBAN: data.receiverBankAccountNumber.replace(/ /g, ''),
@@ -46,7 +47,7 @@ export default function SendTransfer() {
       setSendTransferResponse(data);
     });
 
-    reset();
+    // reset();
   };
 
   return (

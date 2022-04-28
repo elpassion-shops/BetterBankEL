@@ -20,7 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   public async validate(payload) {
-    this.accountsFacade.createAccount(payload);
+    if (!payload) this.accountsFacade.createAccount(payload);
     return payload;
   }
 }

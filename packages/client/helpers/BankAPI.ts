@@ -40,6 +40,6 @@ export class BankAppAPI {
       'POST',
       data
     );
-    return response.json();
+    return await response.json();
   }
 }
