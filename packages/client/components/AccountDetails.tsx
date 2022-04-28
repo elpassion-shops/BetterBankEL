@@ -1,6 +1,9 @@
-import React from 'react';
+import { IAccountDetails } from '@bank-el/interfaces';
+import React, { useContext } from 'react';
+import { AccountContext } from '../pages/account';
 
 export default function AccountDetails() {
+  const userAccount = useContext(AccountContext) as IAccountDetails;
   return (
     <>
       <div className="bg-white	p-4 text-black  ">
@@ -11,7 +14,7 @@ export default function AccountDetails() {
           Available funds
         </div>
         <div className="mb-3">
-          323,00
+          {userAccount && userAccount.accountBalance}
           <span data-testid="foundsCurrency" className="text-xs font-normal	">
             PLN
           </span>
