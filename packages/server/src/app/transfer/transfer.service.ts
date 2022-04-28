@@ -20,8 +20,6 @@ export class TransferService {
       where: { email: email },
     });
 
-    console.log(account);
-
     return await this.transferRepository.find({
       where: [
         { senderIBAN: account.accountNumber },
