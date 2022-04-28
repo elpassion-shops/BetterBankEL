@@ -17,9 +17,13 @@ export const TransferMock = Factory.Sync.makeFactory<ITransfer>({
   title: Factory.each(() => faker.lorem.sentence(5)),
   sender: Factory.each(() => faker.name.findName(undefined, undefined)),
   address: Factory.each(() => faker.address.streetAddress(true)),
-  senderIBAN: Factory.each(() => faker.finance.iban(true, 'PL').slice(2, -1)),
+  senderIBAN: Factory.each(() =>
+    faker.finance.iban(true, 'PL').slice(2, -1).replace(/\s/g, '')
+  ),
   receiver: Factory.each(() => faker.name.findName(undefined, undefined)),
-  receiverIBAN: Factory.each(() => faker.finance.iban(true, 'PL').slice(2, -1)),
+  receiverIBAN: Factory.each(() =>
+    faker.finance.iban(true, 'PL').slice(2, -1).replace(/\s/g, '')
+  ),
 });
 
 const mockTransfers: ITransferHistory = {
