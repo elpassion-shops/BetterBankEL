@@ -1,7 +1,7 @@
 import { ISendTransferResponse, ITransfer } from '@bank-el/interfaces';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { BankAppApiContext } from '../pages';
+import { BankAppApiContext } from '../providers/BankAppApiContext';
 import Modal from './Modal';
 
 export interface ITransferFormData {
