@@ -21,10 +21,14 @@ export default NextAuth({
       // Send properties to the client, like an access_token from a provider.
       // console.log(session, token);
       session.accessToken = token.accessToken;
+      console.log(session);
       return session;
     },
     async redirect({ url, baseUrl }) {
       return '/account';
+    },
+    async signIn({ user, account, profile, email, credentials }) {
+      return true;
     },
   },
   secret: process.env.AUTH0_CLIENT_SECRET,
