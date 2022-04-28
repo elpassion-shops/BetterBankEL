@@ -1,7 +1,7 @@
-import { randomAccnumberGenerator } from './random-accnumber-generator';
+import { AccountGenerator } from './account-generator';
 
 describe('randomAccnumberGenerator', () => {
   it('should return 26 length number', () => {
-    expect(randomAccnumberGenerator()).toHaveLength(26);
+    expect(AccountGenerator.generateRandomNumber()).toHaveLength(26);
   });
 });
