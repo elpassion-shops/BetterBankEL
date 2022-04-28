@@ -9,9 +9,13 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "resolveJsonModule": true,
-    "isolatedModules": false,
+    "isolatedModules": true,
     "incremental": true,
-    "types": ["jest", "node", "@testing-library/jest-dom"],
+    "types": [
+      "jest",
+      "node",
+      "@testing-library/jest-dom"
+    ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
@@ -23,5 +27,8 @@
     "next-env.d.ts",
     "../interfaces/src/ITransferSendFormData.ts"
   ],
-  "exclude": ["node_modules", "jest.config.ts"]
+  "exclude": [
+    "node_modules",
+    "jest.config.ts"
+  ]
 }
