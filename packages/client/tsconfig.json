@@ -9,7 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "incremental": true,
     "types": ["jest", "node", "@testing-library/jest-dom"],
     "experimentalDecorators": true,
