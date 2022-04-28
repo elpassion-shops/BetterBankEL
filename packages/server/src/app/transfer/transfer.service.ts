@@ -41,7 +41,9 @@ export class TransferService {
     );
 
     if (ammountFromAccount < body.amount)
-      return { status: 500, msg: 'Nie masz tyle hajsu' };
+      return { status: 400, msg: 'Nie masz tyle hajsu' };
+    if (user.accountNumber === body.receiverIBAN)
+      return { status: 400, msg: 'Do siebie nie wyślesz :)' };
     const newTransfer = this.transferRepository.create({
       amount: body.amount,
       title: body.title,
