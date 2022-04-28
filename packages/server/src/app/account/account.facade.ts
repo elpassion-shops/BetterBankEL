@@ -16,7 +16,6 @@ export class AccountFacade {
         email: payload.email,
       });
       if (account) return;
-      console.log(payload);
       await this.accountRepository.save(
         AccountGenerator.createAccount(payload.email)
       );

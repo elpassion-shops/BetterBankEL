@@ -1,1 +1,1 @@
-export * from './lib/random-accnumber-generator';
+export * from './lib/account-generator';
