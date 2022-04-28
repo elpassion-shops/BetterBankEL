@@ -17,7 +17,9 @@ export class LoginService {
         email: req.user.email,
       });
       return {
-        accountBalance: account.accountBalance,
+        accountBalance: Number(
+          account.accountBalance.toString().slice(1).replace(',', '')
+        ),
         accountNumber: account.accountNumber,
       };
     } catch (error) {

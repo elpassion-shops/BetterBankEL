@@ -26,7 +26,7 @@ export class BankAppAPI {
   }
   static async getTransfersHistory() {
     const response = await fetch(`${this.serverUrl}/transfers`);
-    return response.json();
+    return await response.json();
   }
   // ! url unknown
   static async getTransfersByDateRange(data: IGetTransfersByDateRangeData) {
@@ -40,6 +40,6 @@ export class BankAppAPI {
       'POST',
       data
     );
-    return response.json();
+    return await response.json();
   }
 }

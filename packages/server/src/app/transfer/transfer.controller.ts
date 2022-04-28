@@ -13,9 +13,11 @@ export class TransferController {
     return await this.transferService.getAllTransfers(req);
   }
 
-  @Post('/')
+  @Post('/new')
   @UseGuards(JwtAuthGuard)
-  async makeNewTransfer(@Body() body: TransferDto) {
-    return await this.transferService.makeNewTransfer(body);
+  async makeNewTransfer(@Body() body: TransferDto, @Req() req) {
+    // console.log(body);
+    // console.log(req);
+    return await this.transferService.makeNewTransfer(body, req);
   }
 }

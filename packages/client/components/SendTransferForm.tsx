@@ -11,6 +11,7 @@ import { BankAppApiContext } from '../providers/BankAppApiContext';
 import Modal from './Modal';
 import { SendTransferValidation } from '../helpers/SendTransferValidation';
 import { AccountContext } from '../pages/account';
+import { useMutation, useQueryClient } from 'react-query';
 
 export default function SendTransfer() {
   const { BankAppAPI } = useContext(BankAppApiContext);
@@ -29,6 +30,22 @@ export default function SendTransfer() {
 
   const userAccount = useContext(AccountContext);
 
+  const queryClient = useQueryClient();
+  const mutation = useMutation(
+    (transferData: ITransfer) => {
+      return BankAppAPI.sendTransfer(transferData).then((data) => {
+        setSendTransferResponse(data);
+      });
+    },
+    {
+      onSuccess: () => {
+        // Invalidate and refetch
+        queryClient.invalidateQueries('userAccountHistory');
+        queryClient.invalidateQueries('userAccountData');
+      },
+    }
+  );
+
   const onSubmit = (data: ITransferSendFormData) => {
     console.log(data);
 
@@ -37,14 +54,13 @@ export default function SendTransfer() {
       amount: data.transferAmount,
       title: data.transferTitle,
       address: data.receiverAddress || '',
+      sender: 'asd',
       senderIBAN: userAccount.accountNumber,
       receiver: data.receiverName,
       receiverIBAN: data.receiverBankAccountNumber.replace(/ /g, ''),
     };
 
-    BankAppAPI.sendTransfer(transferData).then((data) => {
-      setSendTransferResponse(data);
-    });
+    mutation.mutate(transferData);
 
     reset();
   };
@@ -219,10 +235,11 @@ export default function SendTransfer() {
             type="number"
             name="transferAmount"
             id="transferAmount"
+            step=".01"
             placeholder=" "
             className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
             {...register('transferAmount', {
-              setValueAs: (v) => Number.parseInt(v),
+              setValueAs: (v) => Number.parseFloat(v),
             })}
           />
           <label

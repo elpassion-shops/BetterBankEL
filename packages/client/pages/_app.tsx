@@ -1,5 +1,6 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import config from '../config';
 import '../styles/tailwind.css';
 import { SessionProvider } from 'next-auth/react';
@@ -9,6 +10,8 @@ if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   const { setupMocks } = require('../mocks');
   setupMocks();
 }
+
+const queryClient = new QueryClient();
 
 function CustomApp({
   Component,
@@ -22,11 +25,13 @@ function CustomApp({
       </Head>
 
       <div className="dark:text-white">
-        <SessionProvider session={session}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </SessionProvider>
+        <QueryClientProvider client={queryClient}>
+          <SessionProvider session={session}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </SessionProvider>
+        </QueryClientProvider>
       </div>
     </>
   );

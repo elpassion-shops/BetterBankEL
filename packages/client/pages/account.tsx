@@ -16,8 +16,6 @@ export function Account() {
   useEffect(() => {
     BankAppAPI.getAccountDetails().then((data) => {
       setAccountData(data);
-
-      console.log(data);
     });
   }, []);
 
