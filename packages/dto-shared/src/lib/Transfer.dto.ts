@@ -29,9 +29,11 @@ export class TransferDto implements ITransfer {
   address?: string;
   @IsNotEmpty()
   @IsString()
+  @IsOptional()
   sender: string;
   @IsNotEmpty()
   @IsString()
+  @IsOptional()
   senderIBAN: string;
   @IsNotEmpty()
   @IsString()

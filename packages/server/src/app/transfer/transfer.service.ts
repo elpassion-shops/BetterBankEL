@@ -36,9 +36,13 @@ export class TransferService {
     const user = await this.accountRepository.findOneOrFail({
       where: { email: email },
     });
-    if (user.accountBalance < body.amount)
-      throw new Error('Nie masz tyle sianka');
-    const newTransfer = await this.transferRepository.create({
+    const ammountFromAccount = Number(
+      user.accountBalance.toString().slice(1).replace(',', '')
+    );
+
+    if (ammountFromAccount < body.amount)
+      return { status: 500, msg: 'Nie masz tyle hajsu' };
+    const newTransfer = this.transferRepository.create({
       amount: body.amount,
       title: body.title,
       address: body.address,
