@@ -235,10 +235,11 @@ export default function SendTransfer() {
             type="number"
             name="transferAmount"
             id="transferAmount"
+            step=".01"
             placeholder=" "
             className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
             {...register('transferAmount', {
-              setValueAs: (v) => Number.parseInt(v),
+              setValueAs: (v) => Number.parseFloat(v),
             })}
           />
           <label
