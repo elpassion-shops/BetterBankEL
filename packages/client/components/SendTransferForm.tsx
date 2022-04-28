@@ -62,7 +62,7 @@ export default function SendTransfer() {
 
     mutation.mutate(transferData);
 
-    // reset();
+    reset();
   };
 
   return (
