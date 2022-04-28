@@ -10,6 +10,7 @@ import { AppModule } from './app/app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
+  app.enableCors();
   app.use(cookieParser('dupa'));
   app.setGlobalPrefix(globalPrefix);
   app.useGlobalPipes(
