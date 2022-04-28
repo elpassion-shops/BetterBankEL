@@ -11,6 +11,7 @@ import { BankAppApiContext } from '../providers/BankAppApiContext';
 import Modal from './Modal';
 import { SendTransferValidation } from '../helpers/SendTransferValidation';
 import { AccountContext } from '../pages/account';
+import { useMutation, useQueryClient } from 'react-query';
 
 export default function SendTransfer() {
   const { BankAppAPI } = useContext(BankAppApiContext);
@@ -29,6 +30,22 @@ export default function SendTransfer() {
 
   const userAccount = useContext(AccountContext);
 
+  const queryClient = useQueryClient();
+  const mutation = useMutation(
+    (transferData: ITransfer) => {
+      return BankAppAPI.sendTransfer(transferData).then((data) => {
+        setSendTransferResponse(data);
+      });
+    },
+    {
+      onSuccess: () => {
+        // Invalidate and refetch
+        queryClient.invalidateQueries('userAccountHistory');
+        queryClient.invalidateQueries('userAccountData');
+      },
+    }
+  );
+
   const onSubmit = (data: ITransferSendFormData) => {
     console.log(data);
 
@@ -43,9 +60,7 @@ export default function SendTransfer() {
       receiverIBAN: data.receiverBankAccountNumber.replace(/ /g, ''),
     };
 
-    BankAppAPI.sendTransfer(transferData).then((data) => {
-      setSendTransferResponse(data);
-    });
+    mutation.mutate(transferData);
 
     // reset();
   };
