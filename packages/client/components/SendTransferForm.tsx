@@ -39,9 +39,7 @@ export default function SendTransfer() {
       address: data.receiverAddress || '',
       senderIBAN: userAccount.accountNumber,
       receiver: data.receiverName,
-      receiverIBAN: data.receiverBankAccountNumber
-        .replace(/ /g, '')
-        .slice(2, -1),
+      receiverIBAN: data.receiverBankAccountNumber.replace(/ /g, ''),
     };
 
     BankAppAPI.sendTransfer(transferData).then((data) => {
