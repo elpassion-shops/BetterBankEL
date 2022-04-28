@@ -29,6 +29,9 @@ export class AccountFacade {
       const account = await this.accountRepository.findOneOrFail({
         email: req.user.email,
       });
+      account.accountBalance = Number(
+        account.accountBalance.toString().slice(1).replace(',', '')
+      );
       return account;
     } catch (error) {
       throw NotFoundException;
