@@ -2,8 +2,10 @@ import { ITransferSendFormData } from '@bank-el/interfaces';
 import {
   IsDate,
   IsIBAN,
+  IsInt,
   IsOptional,
   IsString,
+  Length,
   Max,
   MaxLength,
   Min,
@@ -18,7 +20,11 @@ export class SendTransferValidation implements ITransferSendFormData {
   @MinLength(5, { message: 'type more than 5 letters' })
   receiverAddress: string;
 
-  @IsIBAN({ message: 'please enter a valid IBAN account number' })
+  // @IsIBAN({ message: 'please enter a valid IBAN account number' })
+
+  // @Min(26, { message: 'please enter a valid IBAN account number' })
+  // @Max(26, { message: 'please enter a valid IBAN account number' })
+  // @Length(26, 26, { message: 'please enter a valid IBAN account number' })
   receiverBankAccountNumber: string;
 
   @IsString()
@@ -26,7 +32,11 @@ export class SendTransferValidation implements ITransferSendFormData {
   @MinLength(5, { message: 'type more than 5 letters' })
   receiverName: string;
 
-  @IsIBAN({ message: 'please enter a valid IBAN account number' })
+  // @IsIBAN({ message: 'please enter a valid IBAN account number' })
+
+  // @Min(26, { message: 'please enter a valid IBAN account number' })
+  // @Max(26, { message: 'please enter a valid IBAN account number' })
+  // @Length(26, 26, { message: 'please enter a valid IBAN account number' })
   senderBankAccountNumber: string;
 
   @Max(1000000, { message: 'enter an amount less than 1000000' })

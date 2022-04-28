@@ -27,7 +27,7 @@ export default function SendTransfer() {
     resolver: classValidatorResolver(SendTransferValidation),
   });
 
-  const userAccount = useContext(AccountContext) as IAccountDetails;
+  const userAccount = useContext(AccountContext);
 
   const onSubmit = (data: ITransferSendFormData) => {
     console.log(data);
@@ -37,8 +37,7 @@ export default function SendTransfer() {
       amount: data.transferAmount,
       title: data.transferTitle,
       address: data.receiverAddress || '',
-      sender: '',
-      senderIBAN: data.senderBankAccountNumber.replace(/ /g, '').slice(2, -1),
+      senderIBAN: userAccount.accountNumber,
       receiver: data.receiverName,
       receiverIBAN: data.receiverBankAccountNumber
         .replace(/ /g, '')
@@ -89,9 +88,9 @@ export default function SendTransfer() {
             type="text"
             name="senderBankAccountNumber"
             id="senderBankAccountNumber"
+            value={userAccount && userAccount.accountNumber}
             placeholder=" "
             className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
-            {...register('senderBankAccountNumber', {})}
           />
           <label
             htmlFor="senderBankAccountNumber"
@@ -102,11 +101,11 @@ export default function SendTransfer() {
         </div>
 
         <div className="pl-4 h-7">
-          {errors.senderBankAccountNumber && (
+          {/* {errors.senderBankAccountNumber && (
             <span role="alert" className="text-sm text-red-600">
               {errors.senderBankAccountNumber.message}
             </span>
-          )}
+          )} */}
         </div>
 
         <div className="relative z-0 outline outline-transparent w-full px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
