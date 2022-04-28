@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render, RenderResult } from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import 'whatwg-fetch';
 import { mswServer } from '../mocks/mswServer';
@@ -7,183 +7,214 @@ import SendTransferForm from '../components/SendTransferForm';
 import { expect } from '@jest/globals';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
+import { ITransferSendFormData } from '@bank-el/interfaces';
 
 beforeAll(() => mswServer.listen());
 afterEach(() => mswServer.resetHandlers());
 afterAll(() => mswServer.close());
-beforeEach(() => {
-  // given
-  act(() => {
-    context = render(<SendTransferForm />);
-  });
-});
-let context: RenderResult<
-  typeof import('@testing-library/dom/types/queries'),
-  HTMLElement,
-  HTMLElement
->;
 
 describe(SendTransferForm.name, () => {
-  describe('tests for basic render', () => {
-    it('should render successfully', () => {
-      // then
-      expect(context).toBeTruthy();
-    });
-
-    it('should have a submit button', () => {
-      // given
-      const addButtonElement = context.getByRole('button', { name: 'Send' });
-
-      // then
-      expect(addButtonElement).not.toBeNull();
-    });
-  });
-
   describe('tests for SendTransferForm initially fields', () => {
     it('input for Recipient name should by initially empty', async () => {
-      // given
-      const recipientNameInputElement = context.getByLabelText(
-        /Recipient/i
-      ) as HTMLInputElement;
-
-      // then
-      expect(recipientNameInputElement.value).toBe('');
+      expect(
+        new SendTransferFormPageObject().receiverBankAccountNumberInputElement
+          .value
+      ).toBe('');
     });
 
     it('input for "From account" should by initially empty', async () => {
-      // given
-      const senderBankAccountNumberInputElement = context.getByLabelText(
-        /From account/i
-      ) as HTMLInputElement;
-
-      // then
-      expect(senderBankAccountNumberInputElement.value).toBe('');
+      expect(
+        new SendTransferFormPageObject().senderBankAccountNumberInputElement
+          .value
+      ).toBe('');
     });
 
     it('input for "To account number" should by initially empty', async () => {
-      // given
-      const receiverBankAccountNumberInputElement = context.getByLabelText(
-        /To account number/i
-      ) as HTMLInputElement;
-
-      // then
-      expect(receiverBankAccountNumberInputElement.value).toBe('');
+      expect(
+        new SendTransferFormPageObject().receiverBankAccountNumberInputElement
+          .value
+      ).toBe('');
     });
 
     it('input for "Transfer date" should by initially empty', async () => {
-      // given
-      const transferDateInputElement = context.getByLabelText(
-        /Transfer date/i
-      ) as HTMLInputElement;
-
-      // then
-      expect(transferDateInputElement.value).toBe('');
+      expect(
+        new SendTransferFormPageObject().transferDateInputElement.value
+      ).toBe('');
     });
 
     it('input for "Transfer title" should by initially empty', async () => {
-      // given
-      const transferTitleInputElement = context.getByLabelText(
-        /Transfer title/i
-      ) as HTMLInputElement;
-
-      // then
-      expect(transferTitleInputElement.value).toBe('');
+      expect(
+        new SendTransferFormPageObject().transferTitleInputElement.value
+      ).toBe('');
     });
   });
 
   describe('tests for SendTransferForm fields typing', () => {
     it('should be able to type account number', async () => {
-      // given
       const recipientName = 'Jarosław Psikuta';
-      const recipientNameInputElement = context.getByLabelText(
-        /Recipient/i
-      ) as HTMLInputElement;
 
-      // when
-      await userEvent.type(recipientNameInputElement, recipientName);
-
-      // then
-      expect(recipientNameInputElement.value).toBe(recipientName);
+      expect(
+        (
+          await new SendTransferFormPageObject().receiverBankAccountNumberInputElement.type(
+            recipientName
+          )
+        ).value
+      ).toBe(recipientName);
     });
 
     it('should be able to type "From account"', async () => {
-      // given
-      const senderBankAccountNumberInputElement = context.getByLabelText(
-        /From account/i
-      ) as HTMLInputElement;
-      const senderBankAccountNumber = '42';
+      const senderBankAccountNumber = 'PL61109010140000071219812874';
 
-      // when
-      await userEvent.type(
-        senderBankAccountNumberInputElement,
-        senderBankAccountNumber
-      );
-
-      // then
-      expect(senderBankAccountNumberInputElement.value).toBe(
-        senderBankAccountNumber
-      );
+      expect(
+        (
+          await new SendTransferFormPageObject().receiverBankAccountNumberInputElement.type(
+            senderBankAccountNumber
+          )
+        ).value
+      ).toBe(senderBankAccountNumber);
     });
 
     it('should be able to type "Adress"', async () => {
-      // given
-      const receiverAddressInputElement = context.getByLabelText(
-        /Enter address/i
-      ) as HTMLInputElement;
       const receiverAddress = 'Warszawa, ul. Władysława Jagiellońskiego 42';
 
-      // when
-      await userEvent.type(receiverAddressInputElement, receiverAddress);
-
-      // then
-      expect(receiverAddressInputElement.value).toBe(receiverAddress);
+      expect(
+        (
+          await new SendTransferFormPageObject().receiverAddressInputElement.type(
+            receiverAddress
+          )
+        ).value
+      ).toBe(receiverAddress);
     });
 
     it('should be able to type "To account number"', async () => {
       // given
       const receiverBankAccountNumber = '61109010140000071219812874';
-      const receiverBankAccountNumberInputElement = context.getByLabelText(
-        /To account number/i
-      ) as HTMLInputElement;
 
-      // when
-      await userEvent.type(
-        receiverBankAccountNumberInputElement,
-        receiverBankAccountNumber
-      );
-
-      // then
-      expect(receiverBankAccountNumberInputElement.value).toBe(
-        receiverBankAccountNumber
-      );
+      expect(
+        (
+          await new SendTransferFormPageObject().receiverBankAccountNumberInputElement.type(
+            receiverBankAccountNumber
+          )
+        ).value
+      ).toBe(receiverBankAccountNumber);
     });
 
     it('should be able to type "Transfer date"', async () => {
-      // given
       const transferDate = '2022-04-26';
-      const transferDateInputElement = context.getByLabelText(
-        /Transfer date/i
-      ) as HTMLInputElement;
 
-      // when
-      await userEvent.type(transferDateInputElement, transferDate);
-
-      // then
-      expect(transferDateInputElement.value).toBe(transferDate);
+      expect(
+        (
+          await new SendTransferFormPageObject().transferDateInputElement.type(
+            transferDate
+          )
+        ).value
+      ).toBe(transferDate);
     });
   });
 
   it('should be able to type "Transfer title"', async () => {
-    // given
     const transferTitle = 'Wypłata z EL Passion';
-    const transferTitleInputElement = context.getByLabelText(
-      /Transfer title/i
-    ) as HTMLInputElement;
 
-    // when
-    await userEvent.type(transferTitleInputElement, transferTitle);
-
-    // then
-    expect(transferTitleInputElement.value).toBe(transferTitle);
+    expect(
+      (
+        await new SendTransferFormPageObject().transferTitleInputElement.type(
+          transferTitle
+        )
+      ).value
+    ).toBe(transferTitle);
   });
 });
+
+class SendTransferFormPageObject {
+  context: RenderResult<
+    typeof import('@testing-library/dom/types/queries'),
+    HTMLElement,
+    HTMLElement
+  > = render(<SendTransferForm />);
+
+  filledWithData(data: ITransferSendFormData): SendTransferFormPageObject {
+    this.receiverNameInputElement.type(data.receiverName);
+    this.senderBankAccountNumberInputElement.type(data.senderBankAccountNumber);
+    this.receiverAddressInputElement.type(data.receiverAddress);
+    this.receiverBankAccountNumberInputElement.type(
+      data.receiverBankAccountNumber
+    );
+    this.transferDateInputElement.type(data.transferDate.toISOString());
+    this.transferTitleInputElement.type(data.transferTitle);
+    this.transferAmountInputElement.type(data.transferAmount.toString());
+    return this;
+  }
+
+  submitted(): SendTransferFormPageObject {
+    this.submitButton.click();
+    return this;
+  }
+
+  get submitButton() {
+    return new ButtonPageObject(this.context, 'send');
+  }
+
+  displaysSuccessMessage() {
+    return this.successMessage;
+  }
+
+  get successMessage() {
+    return this.context.findByText('Pozdro 600');
+  }
+
+  get receiverNameInputElement() {
+    return new InputPageObject(this.context, /Receiver/i);
+  }
+
+  get senderBankAccountNumberInputElement() {
+    return new InputPageObject(this.context, /From account/i);
+  }
+
+  get receiverAddressInputElement() {
+    return new InputPageObject(this.context, /Enter address/i);
+  }
+
+  get receiverBankAccountNumberInputElement() {
+    return new InputPageObject(this.context, /To account number/i);
+  }
+
+  get transferDateInputElement() {
+    return new InputPageObject(this.context, /Transfer date/i);
+  }
+
+  get transferTitleInputElement() {
+    return new InputPageObject(this.context, /Transfer title/i);
+  }
+
+  get transferAmountInputElement() {
+    return new InputPageObject(this.context, /Amount/i);
+  }
+}
+
+class ButtonPageObject {
+  button: HTMLButtonElement;
+  constructor(context, name: string) {
+    this.button = context.getByRole('button', { name: name });
+  }
+
+  click() {
+    userEvent.click(this.button);
+    return this.button;
+  }
+}
+
+class InputPageObject {
+  input: HTMLInputElement;
+  constructor(context, name: RegExp) {
+    this.input = context.getByLabelText(name);
+  }
+
+  async type(text: string) {
+    await userEvent.type(this.input, text);
+    return this.input;
+  }
+
+  get value() {
+    return this.input.value;
+  }
+}
