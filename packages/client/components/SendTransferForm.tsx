@@ -1,18 +1,10 @@
 import { ISendTransferResponse, ITransfer } from '@bank-el/interfaces';
+import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BankAppApiContext } from '../providers/BankAppApiContext';
 import Modal from './Modal';
-
-export interface ITransferFormData {
-  receiverAddress: string;
-  receiverBankAccountNumber: string;
-  recipientName: string;
-  senderBankAccountNumber: string;
-  transferAmount: number;
-  transferDate: Date;
-  transferTitle: string;
-}
+import { SendTransferValidation } from '../helpers/SendTransferValidation';
 
 export default function SendTransfer() {
   const { BankAppAPI } = useContext(BankAppApiContext);
@@ -25,7 +17,9 @@ export default function SendTransfer() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<SendTransferValidation>({
+    resolver: classValidatorResolver(SendTransferValidation),
+  });
 
   const onSubmit = (data: ITransferFormData) => {
     console.log(data);
@@ -36,9 +30,11 @@ export default function SendTransfer() {
       title: data.transferTitle,
       address: data.receiverAddress || '',
       sender: '',
-      senderIBAN: data.senderBankAccountNumber,
-      receiver: '',
-      receiverIBAN: data.receiverBankAccountNumber,
+      senderIBAN: data.senderBankAccountNumber.replace(/ /g, '').slice(2, -1),
+      receiver: data.receiverName,
+      receiverIBAN: data.receiverBankAccountNumber
+        .replace(/ /g, '')
+        .slice(2, -1),
     };
 
     BankAppAPI.sendTransfer(transferData).then((data) => {
@@ -54,26 +50,35 @@ export default function SendTransfer() {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col overflow-hidden relative z-0 "
       >
-        <div className="relative z-0 outline outline-transparent w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
-          <input
-            type="text"
-            name="recipientName"
-            id="recipientName"
-            placeholder=" "
-            className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
-            {...register('recipientName', {})}
-          />
-          <label
-            htmlFor="recipientName"
-            className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
-          >
-            Recipient
-          </label>
+        <div className="">
+          <div className=" relative z-0 outline outline-transparent w-full px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+            <input
+              type="text"
+              name="receiverName"
+              id="receiverName"
+              placeholder=" "
+              className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
+              {...register('receiverName', {})}
+            />
+            <label
+              htmlFor="receiverName"
+              className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
+            >
+              Receiver
+            </label>
+          </div>
+          <div className="pl-4 h-7">
+            {errors.receiverName && (
+              <span role="alert" className="text-sm text-red-600">
+                {errors.receiverName.message}
+              </span>
+            )}
+          </div>
         </div>
 
-        <div className="relative z-0 outline outline-transparent w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+        <div className="relative z-0 outline outline-transparent w-full px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
           <input
-            type="number"
+            type="text"
             name="senderBankAccountNumber"
             id="senderBankAccountNumber"
             placeholder=" "
@@ -88,14 +93,26 @@ export default function SendTransfer() {
           </label>
         </div>
 
-        <div className="relative z-0 outline outline-transparent w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+        <div className="pl-4 h-7">
+          {errors.senderBankAccountNumber && (
+            <span role="alert" className="text-sm text-red-600">
+              {errors.senderBankAccountNumber.message}
+            </span>
+          )}
+        </div>
+
+        <div className="relative z-0 outline outline-transparent w-full px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
           <input
             type="text"
             name="receiverAddress"
             id="receiverAddress"
             placeholder=" "
             className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
-            {...register('receiverAddress', {})}
+            {...register('receiverAddress', {
+              setValueAs: (v) => {
+                return v === '' ? undefined : v;
+              },
+            })}
           />
           <label
             htmlFor="receiverAddress"
@@ -105,31 +122,51 @@ export default function SendTransfer() {
           </label>
         </div>
 
-        <div className="relative z-0 outline outline-transparent w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
-          <input
-            type="text"
-            name="receiverBankAccountNumber"
-            id="receiverBankAccountNumber"
-            placeholder=" "
-            className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
-            {...register('receiverBankAccountNumber', {})}
-          />
-          <label
-            htmlFor="receiverBankAccountNumber"
-            className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
-          >
-            To account number
-          </label>
+        <div className="pl-4 h-7">
+          {errors.receiverAddress && (
+            <span role="alert" className="text-sm text-red-600">
+              {errors.receiverAddress.message}
+            </span>
+          )}
         </div>
 
-        <div className="relative z-0 outline outline-transparent w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+        <div className="">
+          <div className="relative z-0 outline outline-transparent w-full px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+            <input
+              type="text"
+              name="receiverBankAccountNumber"
+              id="receiverBankAccountNumber"
+              placeholder=" "
+              className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
+              {...register('receiverBankAccountNumber', {})}
+            />
+            <label
+              htmlFor="receiverBankAccountNumber"
+              className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
+            >
+              To account number
+            </label>
+          </div>
+        </div>
+
+        <div className="pl-4 h-7">
+          {errors.receiverBankAccountNumber && (
+            <span role="alert" className="text-sm text-red-600">
+              {errors.receiverBankAccountNumber.message}
+            </span>
+          )}
+        </div>
+
+        <div className="relative z-0 outline outline-transparent w-full px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
           <input
             type="date"
             name="transferDate"
             id="transferDate"
             placeholder=" "
             className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
-            {...register('transferDate', {})}
+            {...register('transferDate', {
+              setValueAs: (v) => new Date(v),
+            })}
           />
           <label
             htmlFor="transferDate"
@@ -139,14 +176,22 @@ export default function SendTransfer() {
           </label>
         </div>
 
-        <div className="relative z-0 outline outline-transparent w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+        <div className="pl-4 h-7">
+          {errors.transferDate && (
+            <span role="alert" className="text-sm text-red-600">
+              {errors.transferDate.message}
+            </span>
+          )}
+        </div>
+
+        <div className="relative z-0 outline outline-transparent w-full  px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
           <input
             type="text"
             name="transferTitle"
             id="transferTitle"
             placeholder=" "
             className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
-            {...register('transferTitle', {})}
+            {...register('transferTitle')}
           />
           <label
             htmlFor="transferTitle"
@@ -156,14 +201,24 @@ export default function SendTransfer() {
           </label>
         </div>
 
-        <div className="relative z-0 outline outline-transparent w-full mb-5 px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
+        <div className="pl-4 h-7">
+          {errors.transferTitle && (
+            <span role="alert" className="text-sm text-red-600">
+              {errors.transferTitle.message}
+            </span>
+          )}
+        </div>
+
+        <div className="relative z-0 outline outline-transparent w-full  px-2 pl-4 pt-4 border border-b-2 rounded-[2px] border-b-gray-400 focus-within:border-blue-500">
           <input
             type="number"
             name="transferAmount"
             id="transferAmount"
             placeholder=" "
             className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
-            {...register('transferAmount', {})}
+            {...register('transferAmount', {
+              setValueAs: (v) => Number.parseInt(v),
+            })}
           />
           <label
             htmlFor="transferAmount"
@@ -171,6 +226,14 @@ export default function SendTransfer() {
           >
             Amount
           </label>
+        </div>
+
+        <div className="pl-4 h-7 mb-4">
+          {errors.transferAmount && (
+            <span role="alert" className="text-sm text-red-600">
+              {errors.transferAmount.message}
+            </span>
+          )}
         </div>
 
         <input

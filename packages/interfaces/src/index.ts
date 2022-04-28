@@ -1,3 +1,5 @@
+export * from './ITransferSendFormData';
+
 export interface ITransfer {
   id?: number;
   createdAt?: string;
