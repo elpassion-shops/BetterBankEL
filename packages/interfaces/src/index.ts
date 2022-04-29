@@ -2,8 +2,8 @@ export * from './ITransferSendFormData';
 
 export interface ITransfer {
   id?: number;
-  createdAt?: string;
-  updatedAt?: string;
+  created_at?: string;
+  updated_at?: string;
   amount: number;
   title: string;
   address?: string;
@@ -21,9 +21,7 @@ export interface IAccountDetails {
   updatedAt?: string;
 }
 
-export interface ITransferHistory {
-  transfers: ITransfer[];
-}
+export type ITransferHistory = ITransfer[];
 
 export interface IGetTransfersByDateRangeData {
   from: string;

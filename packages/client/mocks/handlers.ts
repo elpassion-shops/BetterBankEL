@@ -10,7 +10,7 @@ import * as Factory from 'factory.ts';
 
 export const TransferMock = Factory.Sync.makeFactory<ITransfer>({
   id: Factory.each(() => faker.datatype.number({ min: 0, max: 10000 })),
-  createdAt: Factory.each(() => faker.date.past().toISOString()),
+  created_at: Factory.each(() => faker.date.past().toISOString()),
   amount: Factory.each(() =>
     faker.datatype.number({ min: 10, max: 5000, precision: 0.01 })
   ),
@@ -26,12 +26,7 @@ export const TransferMock = Factory.Sync.makeFactory<ITransfer>({
   ),
 });
 
-const mockTransfers: ITransferHistory = {
-  transfers: TransferMock.buildList(10),
-};
-
-mockTransfers.transfers[0].senderIBAN = '61109010140000071219812874';
-mockTransfers.transfers[4].senderIBAN = '61109010140000071219812874';
+const mockTransfers: ITransferHistory = TransferMock.buildList(10);
 
 export const handlers = [
   rest.get(
