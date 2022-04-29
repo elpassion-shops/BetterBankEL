@@ -8,14 +8,9 @@ import { useQuery } from 'react-query';
 export default function AccountHistory() {
   const account = useContext(AccountContext);
 
-  const { isLoading, data, isError } = useQuery(
-    'userAccountHistory',
-    async () => {
-      return await BankAppAPI.getTransfersHistory().then((data) => {
-        return data;
-      });
-    }
-  );
+  const { isLoading, data, isError } = useQuery('userAccountHistory', () => {
+    return BankAppAPI.getTransfersHistory();
+  });
 
   if (isLoading) {
     return (
@@ -61,7 +56,8 @@ export default function AccountHistory() {
           </thead>
 
           <tbody>
-            {data.reverse().map((transfer) => (
+            {console.log(data)}
+            {data.map((transfer) => (
               <tr
                 key={transfer.id}
                 className="bg-white dark:bg-gray-800 border-b"
