@@ -2,20 +2,19 @@ import React, { useContext, useEffect } from 'react';
 import UserContext from '../providers/UserContext';
 
 export default function Index() {
-  const { getSession } = useContext(UserContext);
+  const { isLoggedIn } = useContext(UserContext);
 
   useEffect(() => {
     fetch();
 
     async function fetch() {
-      const data = await getSession();
-      if (data) {
+      if (await isLoggedIn()) {
         console.log('Hello user');
       } else {
         console.log('Hello guest');
       }
     }
-  }, [getSession]);
+  }, [isLoggedIn]);
 
   return (
     <>

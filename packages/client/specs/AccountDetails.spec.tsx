@@ -5,8 +5,16 @@ import 'whatwg-fetch';
 import { mswServer } from '../mocks/mswServer';
 import { expect } from '@jest/globals';
 import '@testing-library/jest-dom';
-
+import { QueryClient, QueryClientProvider, setLogger } from 'react-query';
 import AccountDetails from '../components/AccountDetails';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 beforeAll(() => mswServer.listen());
 afterEach(() => mswServer.resetHandlers());
@@ -14,7 +22,11 @@ afterAll(() => mswServer.close());
 beforeEach(() => {
   // given
   act(() => {
-    context = render(<AccountDetails />);
+    context = render(
+      <QueryClientProvider client={queryClient}>
+        <AccountDetails />
+      </QueryClientProvider>
+    );
   });
 });
 let context: RenderResult<
@@ -29,7 +41,7 @@ describe(AccountDetails.name, () => {
       // then
       expect(context).toBeTruthy();
     });
-    it('should have account type', async () => {
+    it.only('should have account type', async () => {
       // given
 
       // when
