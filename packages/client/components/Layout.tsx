@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import Container from '../components/Container';
 import { useSession } from 'next-auth/react';
 
@@ -14,7 +15,14 @@ export default function Layout({ children }: LayoutProps) {
     <>
       <header>
         <Container>
-          <img src="/logo.png" width={300} height={300} className="mx-auto" />
+          <div className="flex justify-center">
+            <Image
+              src={`${process.env.NEXT_PUBLIC_CLIENT}/logo.png`}
+              width={300}
+              height={300}
+              alt="logo"
+            />
+          </div>
 
           <ul className="flex space-x-6">
             <li>

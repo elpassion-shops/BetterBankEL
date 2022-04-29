@@ -1,25 +1,21 @@
-import { IAccountDetails } from '@bank-el/interfaces';
-import React, { useContext, useEffect } from 'react';
-import { AccountContext } from '../pages/account';
+import React, { useContext } from 'react';
 import { useQuery } from 'react-query';
-import { BankAppAPI } from '../helpers/BankAPI';
 import Loader from './Loader';
+import { BankAppApiContext } from '../providers/BankAppApiContext';
 
 export default function AccountDetails() {
-  const userAccount = useContext(AccountContext) as IAccountDetails;
-  const userAccountData = useQuery('userAccountData', async () => {
-    return BankAppAPI.getAccountDetails().then((data) => {
-      return data;
-    });
-  });
+  const { BankAppAPI } = useContext(BankAppApiContext);
+  const userAccount = useQuery('userAccountData', () =>
+    BankAppAPI.getAccountDetails()
+  );
 
-  if (userAccountData.isLoading) {
+  if (userAccount.isLoading) {
     return <Loader />;
   }
 
   return (
     <>
-      <div className="bg-white	p-4 text-black  ">
+      <div className="bg-white	p-4 text-black">
         <div data-testid="accountType" className="text-lg font-bold mb-3">
           eKonto
         </div>
@@ -27,9 +23,7 @@ export default function AccountDetails() {
           Available funds
         </div>
         <div className="mb-3">
-          {userAccountData &&
-            userAccountData.data &&
-            userAccountData.data.accountBalance}
+          {userAccount && userAccount.data && userAccount.data.accountBalance}
           <span data-testid="foundsCurrency" className="text-xs font-normal	">
             PLN
           </span>

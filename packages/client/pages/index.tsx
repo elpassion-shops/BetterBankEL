@@ -15,7 +15,7 @@ export default function Index() {
         console.log('Hello guest');
       }
     }
-  }, []);
+  }, [getSession]);
 
   return (
     <>

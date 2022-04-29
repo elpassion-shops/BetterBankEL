@@ -1,23 +1,19 @@
-import {
-  IAccountDetails,
-  ISendTransferResponse,
-  ITransfer,
-  ITransferSendFormData,
-} from '@bank-el/interfaces';
+import { ITransfer, ITransferSendFormData } from '@bank-el/interfaces';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BankAppApiContext } from '../providers/BankAppApiContext';
 import Modal from './Modal';
 import { SendTransferValidation } from '../helpers/SendTransferValidation';
-import { AccountContext } from '../pages/account';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import Loader from './Loader';
 
 export default function SendTransfer() {
   const { BankAppAPI } = useContext(BankAppApiContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [sendTranferResponse, setSendTransferResponse] =
-    useState<ISendTransferResponse | null>(null);
+  const [isModalOpen] = useState(false);
+  const userAccount = useQuery('userAccountData', () =>
+    BankAppAPI.getAccountDetails()
+  );
 
   const {
     register,
@@ -28,15 +24,9 @@ export default function SendTransfer() {
     resolver: classValidatorResolver(SendTransferValidation),
   });
 
-  const userAccount = useContext(AccountContext);
-
   const queryClient = useQueryClient();
   const mutation = useMutation(
-    (transferData: ITransfer) => {
-      return BankAppAPI.sendTransfer(transferData).then((data) => {
-        setSendTransferResponse(data);
-      });
-    },
+    (transferData: ITransfer) => BankAppAPI.sendTransfer(transferData),
     {
       onSuccess: () => {
         // Invalidate and refetch
@@ -54,8 +44,8 @@ export default function SendTransfer() {
       amount: data.transferAmount,
       title: data.transferTitle,
       address: data.receiverAddress || '',
-      sender: 'asd',
-      senderIBAN: userAccount.accountNumber,
+      sender: '',
+      senderIBAN: userAccount.data.accountNumber,
       receiver: data.receiverName,
       receiverIBAN: data.receiverBankAccountNumber.replace(/ /g, ''),
     };
@@ -64,6 +54,10 @@ export default function SendTransfer() {
 
     reset();
   };
+
+  if (userAccount.isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="bg-white	p-4">
@@ -102,7 +96,7 @@ export default function SendTransfer() {
             type="text"
             name="senderBankAccountNumber"
             id="senderBankAccountNumber"
-            value={userAccount && userAccount.accountNumber}
+            value={userAccount && userAccount.data.accountNumber}
             placeholder=" "
             className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
             onChange={() => null}
@@ -139,6 +133,7 @@ export default function SendTransfer() {
           <label
             htmlFor="receiverAddress"
             className="absolute duration-300 top-4 -z-1 origin-0 text-gray-500 text-lg"
+            onChange={() => null}
           >
             Enter address (optional)
           </label>
@@ -268,6 +263,7 @@ export default function SendTransfer() {
         <button
           value="Cancel"
           className="bg-white-500 hover:bg-gray-200 text-red-500 font-bold font-light py-1 px-2 mb-7 rounded-full"
+          onClick={() => reset()}
         >
           Cancel
         </button>

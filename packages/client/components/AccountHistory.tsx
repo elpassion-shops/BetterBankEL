@@ -1,28 +1,20 @@
 import { ReactNode, useContext } from 'react';
 import { FaCreditCard, FaRegCreditCard } from 'react-icons/fa';
 import Loader from '../components/Loader';
-import { BankAppAPI } from '../helpers/BankAPI';
-import { AccountContext } from '../pages/account';
 import { useQuery } from 'react-query';
+import { BankAppApiContext } from '../providers/BankAppApiContext';
 
 export default function AccountHistory() {
-  const account = useContext(AccountContext);
-
-  const { isLoading, data, isError } = useQuery(
-    'userAccountHistory',
-    async () => {
-      return await BankAppAPI.getTransfersHistory().then((data) => {
-        return data;
-      });
-    }
+  const { BankAppAPI } = useContext(BankAppApiContext);
+  const { isLoading, data, isError } = useQuery('userAccountHistory', () =>
+    BankAppAPI.getTransfersHistory()
+  );
+  const userAccount = useQuery('userAccountData', () =>
+    BankAppAPI.getAccountDetails()
   );
 
-  if (isLoading) {
-    return (
-      <>
-        <Loader />
-      </>
-    );
+  if ((isLoading && userAccount.isLoading) || !data) {
+    return <Loader />;
   }
 
   if (isError) {
@@ -69,7 +61,7 @@ export default function AccountHistory() {
                 <TableCell type="td">
                   {getTransferTypeIcon(
                     isTransferOutgoingOrIncoming(
-                      account.accountNumber,
+                      userAccount.data.accountNumber,
                       transfer.senderIBAN
                     )
                   )}
