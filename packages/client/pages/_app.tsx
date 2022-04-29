@@ -27,9 +27,7 @@ function CustomApp({
 
       <div className="dark:text-white">
         <QueryClientProvider client={queryClient}>
-          {process.env.NODE_ENV === 'development' && (
-            <ReactQueryDevtools initialIsOpen={false} />
-          )}
+          <ReactQueryDevtools initialIsOpen={false} />
 
           <SessionProvider session={session}>
             <Layout>
