@@ -13,6 +13,6 @@ describe('LoginService', () => {
   });
 
   it('should be defined', () => {
-    expect(service.login()).toBeDefined();
+    expect(service.login({})).toBeDefined();
   });
 });
