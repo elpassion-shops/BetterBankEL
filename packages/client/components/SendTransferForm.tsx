@@ -105,6 +105,7 @@ export default function SendTransfer() {
             value={userAccount && userAccount.accountNumber}
             placeholder=" "
             className=" text-gray-800 pt-2 pb-2 block w-full px-0 mt-0 bg-transparent border-0 appearance-none focus:outline-none focus:ring-0"
+            onChange={() => null}
           />
           <label
             htmlFor="senderBankAccountNumber"
