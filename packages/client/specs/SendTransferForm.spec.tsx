@@ -8,6 +8,7 @@ import { expect } from '@jest/globals';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import { ITransferSendFormData } from '@bank-el/interfaces';
+import { renderWithClient } from '../mocks/utils';
 
 beforeAll(() => mswServer.listen());
 afterEach(() => mswServer.resetHandlers());
@@ -130,7 +131,7 @@ class SendTransferFormPageObject {
     typeof import('@testing-library/dom/types/queries'),
     HTMLElement,
     HTMLElement
-  > = render(<SendTransferForm />);
+  > = renderWithClient(<SendTransferForm />);
 
   filledWithData(data: ITransferSendFormData): SendTransferFormPageObject {
     this.receiverNameInputElement.type(data.receiverName);
