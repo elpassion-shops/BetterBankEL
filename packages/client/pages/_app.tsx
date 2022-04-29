@@ -1,6 +1,7 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import config from '../config';
 import '../styles/tailwind.css';
 import { SessionProvider } from 'next-auth/react';
@@ -26,6 +27,10 @@ function CustomApp({
 
       <div className="dark:text-white">
         <QueryClientProvider client={queryClient}>
+          {process.env.NODE_ENV === 'development' && (
+            <ReactQueryDevtools initialIsOpen={false} />
+          )}
+
           <SessionProvider session={session}>
             <Layout>
               <Component {...pageProps} />
